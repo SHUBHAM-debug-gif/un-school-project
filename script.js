@@ -1264,7 +1264,8 @@ function initMobileNavigation(){
   $$("[data-proxy-click]").forEach(button=>button.addEventListener("click",()=>{
     const target=document.getElementById(button.dataset.proxyClick);
     $("#mainNav")?.classList.remove("open");
-    target?.click();
+    $("#menuBtn")?.setAttribute("aria-expanded","false");
+    window.setTimeout(()=>target?.click(),80);
   }));
 
   $$("#mobileNav a").forEach(link=>link.addEventListener("click",()=>{
@@ -2001,6 +2002,17 @@ function initNewSectionJumps(){
   $$("[data-section-jump]").forEach(b=>b.addEventListener("click",()=>{$("#mainNav")?.classList.remove("open");document.querySelector(b.dataset.sectionJump)?.scrollIntoView({behavior:"smooth"})}));
 }
 
+
+function initMobileMusicAccess(){
+  const launcher=$("#mobileMusicLauncher");
+  if(!launcher)return;
+  launcher.addEventListener("click",()=>{
+    $("#mainNav")?.classList.remove("open");
+    $("#menuBtn")?.setAttribute("aria-expanded","false");
+    $("#soundBtn")?.click();
+  });
+}
+
 function initTilt(){
   if(TEST_MODE||matchMedia("(pointer:coarse)").matches)return;
   $$(".agency-card,.organ-card,.gallery-card,.game-card").forEach(card=>{
@@ -2015,7 +2027,7 @@ function initTilt(){
 safe(initReveal);safe(initScrollUI);safe(initCounters);safe(initNavigation);safe(initLanguage);
 safe(initEcosystem);safe(initAgencies);safe(initMap);safe(initPeace);safe(initSDGs);
 safe(initSimulators);safe(initGallery);safe(initLearning);safe(initSound);safe(initModal);
-safe(initTour);safe(initPresentation);safe(initFloatingAI);safe(initMobileNavigation);safe(initPerformanceMode);safe(initBackToTop);safe(initHeroRoomStrip);safe(initAgencyComparison);safe(initFundingLab);safe(initCountryExplorer);safe(initMUNChallenge);safe(initMuseumPassport);safe(initInternationalDays);safe(initDiplomacyLab);safe(initAdvancedGames);safe(initNarration);safe(initSituationRoom);safe(initChamberTour);safe(initResolutionBuilder);safe(initCareerExplorer);safe(initDailyChallenge);safe(initNewSectionJumps);safe(initCharterValues);safe(initUNWork);safe(initKnowledgeCentre);safe(initMuseumSearch);safe(initSDGCity);safe(initIndiaUN);safe(initPWA);safe(initUtilityPanels);safe(initKioskAndAutoTour);safe(initTilt);
+safe(initTour);safe(initPresentation);safe(initFloatingAI);safe(initMobileNavigation);safe(initPerformanceMode);safe(initBackToTop);safe(initHeroRoomStrip);safe(initAgencyComparison);safe(initFundingLab);safe(initCountryExplorer);safe(initMUNChallenge);safe(initMuseumPassport);safe(initInternationalDays);safe(initDiplomacyLab);safe(initAdvancedGames);safe(initNarration);safe(initSituationRoom);safe(initChamberTour);safe(initResolutionBuilder);safe(initCareerExplorer);safe(initDailyChallenge);safe(initNewSectionJumps);safe(initMobileMusicAccess);safe(initCharterValues);safe(initUNWork);safe(initKnowledgeCentre);safe(initMuseumSearch);safe(initSDGCity);safe(initIndiaUN);safe(initPWA);safe(initUtilityPanels);safe(initKioskAndAutoTour);safe(initTilt);
 
 document.body.dataset.appReady="true";
 })();

@@ -1,11 +1,11 @@
 {
-  "name": "United Nations Ecosystem V10.4 Multilingual Edition",
-  "short_name": "UN Museum 4 Languages",
+  "name": "United Nations Ecosystem V10.5 Mobile Friendly Edition",
+  "short_name": "UN Museum Mobile",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#020918",
   "theme_color": "#009edb",
-  "description": "Interactive UN museum supporting English, Hindi, French and Spanish with localized narration and voice input.",
+  "description": "Mobile-optimized multilingual UN museum with contained hero design, scroll-safe navigation and permanent music access.",
   "icons": [
     {
       "src": "assets/icons/icon-192.png",

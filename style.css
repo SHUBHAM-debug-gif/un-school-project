@@ -1227,3 +1227,285 @@ html[lang="hi"] .section-heading h2,html[lang="hi"] .hero h1{line-height:1.06;le
   .language-picker #languageBtn{min-width:59px;gap:5px}
   .language-picker #languageBtn span{font-size:16px}
 }
+
+
+/* ==========================================================
+   V10.5 COMPLETE MOBILE-FRIENDLY FIX
+   ========================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+main,.hero,.hero-copy,.hero-visual,.section,.section>*{min-width:0;max-width:100%}
+img,svg,video,canvas{max-width:100%;height:auto}
+.topbar{max-width:100vw;overflow:visible}
+.compact-top-action{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.compact-top-action span{font-size:14px}
+.compact-top-action b{font-size:10px}
+.mobile-music-launcher{display:none}
+
+@media(max-width:900px){
+  body{
+    width:100%;
+    max-width:100vw;
+    overflow-x:hidden;
+  }
+
+  /* The mobile menu now ends above the fixed bottom navigation. */
+  #mainNav{
+    top:calc(var(--header-height) + env(safe-area-inset-top) + 4px);
+    bottom:calc(var(--mobile-nav-height) + 18px + env(safe-area-inset-bottom));
+    left:10px;
+    right:10px;
+    width:auto;
+    max-width:none;
+    max-height:none;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    padding:12px 12px 28px;
+    scroll-padding-bottom:28px;
+  }
+  #mainNav>a{
+    flex:0 0 auto;
+    width:100%;
+    min-height:50px;
+  }
+  .mobile-menu-tools{
+    flex:0 0 auto;
+    width:100%;
+    padding-bottom:12px;
+  }
+
+  /* Prevent every hero child from increasing the document width. */
+  .hero{
+    width:100%;
+    max-width:100vw;
+    overflow:hidden;
+    padding-left:16px;
+    padding-right:16px;
+  }
+  .hero-copy,.hero-visual{
+    width:100%;
+    max-width:100%;
+    overflow:hidden;
+  }
+  .hero h1{
+    width:100%;
+    max-width:100%;
+    margin-left:auto;
+    margin-right:auto;
+    overflow-wrap:anywhere;
+  }
+  .hero h1 small,.hero h1 span{
+    width:100%;
+    max-width:100%;
+  }
+  .hero h1 span{
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+  .hero-lead{
+    width:100%;
+    max-width:100%;
+    padding-inline:4px;
+    overflow-wrap:anywhere;
+  }
+  .hero-actions,.hero-badges,.hero-institution-bar,.hero-room-strip,.hero-stats{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+  }
+  .hero-institution-bar{
+    justify-content:center;
+    overflow:hidden;
+  }
+  .hero-room-strip a,.hero-stats article{
+    min-width:0;
+    overflow:hidden;
+  }
+  .hero-room-strip b,.hero-room-strip small,.hero-stats span{
+    overflow-wrap:anywhere;
+  }
+  .hero-visual{
+    min-height:300px;
+  }
+  .earth-wrap,.earth{
+    max-width:100%;
+  }
+
+  /* Permanent phone music control above the bottom nav. */
+  .mobile-music-launcher{
+    position:fixed;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    left:14px;
+    bottom:calc(var(--mobile-nav-height) + 20px + env(safe-area-inset-bottom));
+    z-index:1205;
+    min-width:92px;
+    min-height:43px;
+    padding:8px 13px;
+    border:1px solid rgba(92,225,255,.34);
+    border-radius:999px;
+    background:rgba(3,20,42,.94);
+    color:white;
+    box-shadow:0 12px 34px rgba(0,0,0,.55),0 0 18px rgba(92,225,255,.12);
+    backdrop-filter:blur(17px);
+  }
+  .mobile-music-launcher span{
+    width:27px;height:27px;display:grid;place-items:center;
+    border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--blue));
+    color:#001426;font-size:15px;font-weight:900;
+  }
+  .mobile-music-launcher b{font-size:9px}
+  body.music-playing .mobile-music-launcher span{animation:pulse 1.25s infinite}
+  body.music-has-started .mobile-music-launcher{display:none}
+
+  /* The music bottom sheet always fits between header and bottom nav. */
+  .music-panel{
+    left:8px;
+    right:8px;
+    bottom:calc(var(--mobile-nav-height) + 10px + env(safe-area-inset-bottom));
+    width:auto;
+    max-width:none;
+    max-height:calc(100dvh - var(--header-height) - var(--mobile-nav-height) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
+    padding-bottom:calc(18px + env(safe-area-inset-bottom));
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+  .music-track-list{max-height:220px;overflow:auto}
+}
+
+@media(max-width:600px){
+  .topbar{
+    padding-inline:10px;
+    gap:6px;
+  }
+  .brand{
+    flex:1 1 auto;
+    min-width:0;
+    gap:7px;
+  }
+  .brand-seal{
+    flex:0 0 39px;
+  }
+  .brand>span:last-child{
+    min-width:0;
+    overflow:hidden;
+  }
+  .brand b{
+    display:block;
+    max-width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .top-actions{
+    flex:0 0 auto;
+    gap:4px;
+  }
+  .top-actions button{
+    min-width:43px;
+    width:43px;
+    padding:6px;
+  }
+  .compact-top-action b{display:none}
+  .compact-top-action span{font-size:16px}
+  .language-picker #languageBtn{
+    width:auto;
+    min-width:65px;
+    padding-inline:7px;
+  }
+  #menuBtn{width:43px}
+
+  /* Fit the complete title inside a 320–430 px phone viewport. */
+  .hero{
+    padding-top:calc(var(--header-height) + env(safe-area-inset-top) + 18px);
+  }
+  .hero h1{
+    font-size:clamp(31px,9.6vw,41px)!important;
+    line-height:.94;
+    letter-spacing:-.035em;
+  }
+  .hero h1 small{
+    font-size:.48em;
+    letter-spacing:.025em;
+  }
+  .hero h1 span{
+    font-size:1em;
+    -webkit-text-stroke:.8px var(--cyan);
+  }
+  .hero-lead{
+    font-size:13.5px;
+    line-height:1.62;
+  }
+  .hero-visual{
+    min-height:285px;
+  }
+  .earth{
+    width:min(255px,72vw)!important;
+  }
+  .floating-label{
+    max-width:90px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .hero-badges{
+    width:100%;
+    margin-inline:0;
+    padding-inline:0;
+  }
+  .hero-institution-bar{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:7px;
+    text-align:center;
+  }
+  .hero-institution-bar span{
+    min-width:0;
+    max-width:100%;
+    overflow-wrap:anywhere;
+  }
+
+  #mainNav{
+    border-radius:16px;
+  }
+  #mainNav a{
+    padding:13px 14px;
+    font-size:15px;
+  }
+  .mobile-menu-tools{
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .mobile-menu-tools button{
+    min-width:0;
+    min-height:62px;
+    padding:10px;
+  }
+  .mobile-menu-tools b{
+    overflow-wrap:anywhere;
+    line-height:1.25;
+  }
+}
+
+@media(max-width:390px){
+  .brand-mobile-text{font-size:8.5px}
+  .top-actions{gap:3px}
+  .top-actions button,#menuBtn{width:40px;min-width:40px}
+  .language-picker #languageBtn{min-width:58px;width:58px}
+  .language-picker #languageBtn i{display:none}
+  .hero h1{
+    font-size:clamp(29px,9.3vw,36px)!important;
+  }
+  .hero-visual{min-height:265px}
+  .earth{width:min(235px,70vw)!important}
+  .hero-room-strip{grid-template-columns:1fr 1fr}
+  .mobile-menu-tools{grid-template-columns:1fr}
+  .mobile-music-launcher{
+    left:10px;
+    min-width:44px;
+    width:44px;
+    padding:7px;
+  }
+  .mobile-music-launcher b{display:none}
+}
