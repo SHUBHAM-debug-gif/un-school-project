@@ -1,0 +1,1532 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Interactive United Nations Ecosystem digital museum for a school exhibition">
+  <meta name="theme-color" content="#031225">
+  <title>United Nations Ecosystem — V10.4 Multilingual Edition</title>
+  <style id="critical-hidden-fix">[hidden]{display:none!important}.modal[hidden],.tour-card[hidden],.presentation-controls[hidden],.drawer-backdrop[hidden],.sim-panel[hidden],#runtimeError[hidden]{display:none!important}</style>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="style.css?v=10.4">
+</head>
+<body>
+  <a class="skip-link" href="#home">Skip to main content</a>
+  <div id="runtimeError" hidden></div>
+  <div class="scroll-progress"><span id="scrollProgress"></span></div>
+  <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <div id="loader" class="loader" role="status" aria-live="polite">
+    <div class="loader-emblem">
+      <span>UN</span>
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="42"/>
+        <ellipse cx="50" cy="50" rx="22" ry="42"/>
+        <ellipse cx="50" cy="50" rx="42" ry="18"/>
+        <path d="M8 50h84M50 8v84"/>
+      </svg>
+    </div>
+    <p data-en="Opening the United Nations Digital Museum" data-hi="संयुक्त राष्ट्र डिजिटल संग्रहालय खुल रहा है">Opening the United Nations Digital Museum</p>
+    <div class="loader-track"><span></span></div>
+    <button id="skipLoader" type="button" onclick="var l=document.getElementById('loader');if(l){l.style.display='none';l.setAttribute('aria-hidden','true');}document.body.classList.remove('no-scroll');">Skip intro</button>
+  </div>
+
+  <script>
+  (function(){
+    var released=false;
+    function release(){
+      if(released)return;
+      released=true;
+      var loader=document.getElementById("loader");
+      if(loader){
+        loader.classList.add("hidden");
+        loader.style.pointerEvents="none";
+        window.setTimeout(function(){loader.style.display="none";},700);
+      }
+      if(document.body)document.body.classList.remove("no-scroll");
+    }
+    window.__releaseUNLoader=release;
+    window.setTimeout(release,1800);
+    document.addEventListener("DOMContentLoaded",function(){
+      window.setTimeout(release,1800);
+    },{once:true});
+    window.addEventListener("load",function(){window.setTimeout(release,250);},{once:true});
+    window.addEventListener("error",release);
+    window.addEventListener("unhandledrejection",release);
+  })();
+  </script>
+
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="United Nations Ecosystem home">
+      <span class="brand-seal">UN</span>
+      <span><b><span class="brand-desktop-text">UNITED NATIONS</span><span class="brand-mobile-text">UN MUSEUM</span></b><small>ECOSYSTEM MUSEUM</small></span>
+    </a>
+
+    <nav id="mainNav" aria-label="Main navigation">
+      <a href="#charter" data-en="Charter" data-hi="चार्टर">Charter</a>
+      <a href="#ecosystem" data-en="Ecosystem" data-hi="पारिस्थितिकी">Ecosystem</a>
+      <a href="#agencies" data-en="Agencies" data-hi="एजेंसियाँ">Agencies</a>
+      <a href="#work" data-en="Our Work" data-hi="हमारा कार्य">Our Work</a>
+      <a href="#map" data-en="World Map" data-hi="विश्व मानचित्र">World Map</a>
+      <a href="#peace" data-en="Peacekeeping" data-hi="शांति स्थापना">Peacekeeping</a>
+      <a href="#sdgs">SDGs</a>
+      <a href="#simulators" data-en="Simulators" data-hi="सिमुलेटर">Simulators</a>
+      <a href="#learning" data-en="Learning Lab" data-hi="अध्ययन प्रयोगशाला">Learning Lab</a>
+      <div class="mobile-menu-tools" aria-label="Website tools">
+        <button type="button" data-proxy-click="museumSearchBtn"><span>⌕</span><b>Search Museum</b></button>
+        <button type="button" data-proxy-click="passportBtn"><span>◉</span><b>My Passport</b></button>
+        <button type="button" data-proxy-click="narrationBtn"><span>🔊</span><b>Narrate Section</b></button>
+        <button type="button" data-section-jump="#situation-room"><span>◈</span><b>Situation Room</b></button>
+        <button type="button" data-section-jump="#resolution-builder"><span>📝</span><b>Build Resolution</b></button>
+        <button type="button" data-proxy-click="installBtn"><span>⇩</span><b>Install App</b></button>
+        <button type="button" data-proxy-click="accessBtn"><span>Aa</span><b>Accessibility</b></button>
+        <button type="button" data-proxy-click="controlBtn"><span>▦</span><b>Presenter</b></button>
+        <button type="button" data-proxy-click="soundBtn"><span>♫</span><b>Music Player</b></button>
+      </div>
+    </nav>
+
+    <div class="top-actions">
+      <button id="museumSearchBtn" class="search-trigger" type="button" title="Search museum"><span>⌕</span><b>Search</b><kbd>/</kbd></button>
+      <button id="narrationBtn" type="button" title="Narrate current section">Narrate</button>
+      <button id="passportBtn" type="button" title="Visitor passport">Passport</button>
+
+      <div class="language-picker">
+        <button id="languageBtn" type="button" title="Language" aria-haspopup="true" aria-expanded="false">
+          <span id="languageFlag">🇬🇧</span><b id="languageCode">EN</b><i>▾</i>
+        </button>
+        <div id="languageMenu" class="language-menu" hidden role="menu" aria-label="Language">
+          <button type="button" data-language="en" role="menuitem"><span>🇬🇧</span><b>English</b><small>EN</small></button>
+          <button type="button" data-language="hi" role="menuitem"><span>🇮🇳</span><b>हिन्दी</b><small>HI</small></button>
+          <button type="button" data-language="fr" role="menuitem"><span>🇫🇷</span><b>Français</b><small>FR</small></button>
+          <button type="button" data-language="es" role="menuitem"><span>🇪🇸</span><b>Español</b><small>ES</small></button>
+        </div>
+      </div>
+      <button id="roomsBtn" type="button" title="Open museum rooms">Rooms</button>
+      <button id="soundBtn" type="button" title="Open music player" aria-pressed="false">♫</button>
+      <button id="installBtn" type="button" title="Install app" hidden>Install</button>
+      <button id="accessBtn" type="button" title="Accessibility controls">Aa</button>
+      <button id="controlBtn" type="button" title="Presenter dashboard">Control</button>
+      <button id="presentBtn" type="button" title="Presentation mode">Present</button>
+      <button id="menuBtn" type="button" title="Menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <aside id="roomsDrawer" class="rooms-drawer" aria-hidden="true">
+    <button id="roomsClose" class="drawer-close" type="button" aria-label="Close rooms">×</button>
+    <p class="eyebrow">DIGITAL MUSEUM MAP</p>
+    <h2 data-en="Exhibition Rooms" data-hi="प्रदर्शनी कक्ष">Exhibition Rooms</h2>
+    <div class="room-list">
+      <a href="#home"><b>01</b><span>Opening Earth</span></a>
+      <a href="#charter"><b>02</b><span>UN Charter & Values</span></a>
+      <a href="#ecosystem"><b>03</b><span>UN Ecosystem</span></a>
+      <a href="#agencies"><b>04</b><span>Organs & Agencies</span></a>
+      <a href="#agency-compare"><b>04A</b><span>Agency Comparison</span></a>
+      <a href="#work"><b>05</b><span>UN in Action</span></a>
+      <a href="#funding"><b>05A</b><span>Funding & Priorities Lab</span></a>
+      <a href="#map"><b>06</b><span>Global Headquarters</span></a>
+      <a href="#countries"><b>06A</b><span>193 Countries Explorer</span></a>
+      <a href="#peace"><b>07</b><span>Peacekeeping Centre</span></a>
+      <a href="#situation-room"><b>07A</b><span>Global Situation Room</span></a>
+      <a href="#sdgs"><b>08</b><span>SDG Gallery</span></a>
+      <a href="#simulators"><b>09</b><span>Decision Chamber</span></a>
+      <a href="#sdg-city"><b>10</b><span>SDG City 2030</span></a>
+      <a href="#gallery"><b>11</b><span>Photo Gallery</span></a>
+      <a href="#chamber-tour"><b>11A</b><span>Chamber Hotspot Tour</span></a>
+      <a href="#india-un"><b>12</b><span>India & the UN</span></a>
+      <a href="#history"><b>13</b><span>History Museum</span></a>
+      <a href="#international-days"><b>14</b><span>International Days</span></a>
+      <a href="#knowledge"><b>15</b><span>Knowledge Centre</span></a>
+      <a href="#learning"><b>16</b><span>Learning Lab</span></a>
+      <a href="#diplomacy-lab"><b>17</b><span>Diplomacy Lab</span></a>
+      <a href="#resolution-builder"><b>18</b><span>Resolution Builder</span></a>
+      <a href="#careers"><b>19</b><span>UN Careers Explorer</span></a>
+    </div>
+  </aside>
+  <div id="drawerBackdrop" class="drawer-backdrop" hidden></div>
+
+  <main>
+    <section id="home" data-room="00" class="hero presentation-stop">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">TENDER HEART SCHOOL • SOCIAL SCIENCE EXHIBITION 2026</p>
+        <h1>
+          <small data-en="THE FULL" data-hi="पूर्ण">THE FULL</small>
+          <span>UNITED NATIONS</span>
+          <small data-en="ECOSYSTEM" data-hi="पारिस्थितिकी तंत्र">ECOSYSTEM</small>
+        </h1>
+        <p class="hero-lead"
+           data-en="A cinematic and interactive journey through the organs, agencies and global programmes working for peace, dignity, equality and a healthy planet."
+           data-hi="शांति, गरिमा, समानता और स्वस्थ पृथ्वी के लिए कार्य करने वाले अंगों, एजेंसियों और वैश्विक कार्यक्रमों की एक सिनेमाई तथा इंटरैक्टिव यात्रा।">
+           A cinematic and interactive journey through the organs, agencies and global programmes working for peace, dignity, equality and a healthy planet.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#ecosystem" data-en="Enter the Museum" data-hi="संग्रहालय में प्रवेश करें">Enter the Museum</a>
+          <button id="tourBtn" class="button glass" type="button" data-en="Start Guided Tour" data-hi="मार्गदर्शित यात्रा शुरू करें">Start Guided Tour</button>
+        </div>
+        <div class="hero-badges professional-badges">
+          <span>🌍 Interactive Museum</span><span>📱 Mobile First</span><span>🔗 Official Sources</span><span>⚡ Offline Ready</span>
+        </div>
+        <div class="hero-institution-bar">
+          <span><i></i> Verified educational content</span>
+          <span>School Exhibition Edition</span>
+          <span>Updated July 2026</span>
+        </div>
+        <div class="hero-room-strip" aria-label="Quick museum access">
+          <a href="#map"><span>🗺️</span><b>UN Offices</b><small>World map</small></a>
+          <a href="#simulators"><span>⚖️</span><b>Voting Hall</b><small>GA & UNSC</small></a>
+          <a href="#sdg-city"><span>🏙️</span><b>SDG City</b><small>Future 2030</small></a>
+          <a href="#india-un"><span>🇮🇳</span><b>India & UN</b><small>Global role</small></a>
+        </div>
+        <div class="hero-stats">
+          <article><strong data-counter="193">0</strong><span data-en="Member States" data-hi="सदस्य देश">Member States</span></article>
+          <article><strong data-counter="6">0</strong><span data-en="Principal Organs" data-hi="प्रधान अंग">Principal Organs</span></article>
+          <article><strong data-counter="17">0</strong><span data-en="Global Goals" data-hi="वैश्विक लक्ष्य">Global Goals</span></article>
+          <article><strong data-counter="11">0</strong><span data-en="Peacekeeping Missions" data-hi="शांति मिशन">Peacekeeping Missions</span></article>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" aria-label="Animated Earth and UN network">
+        <div class="earth-orbit orbit-one"></div>
+        <div class="earth-orbit orbit-two"></div>
+        <div class="earth">
+          <div class="earth-shine"></div>
+          <svg class="earth-svg" viewBox="0 0 500 500" aria-hidden="true">
+            <defs><clipPath id="earthClip"><circle cx="250" cy="250" r="205"/></clipPath></defs>
+            <circle cx="250" cy="250" r="207" class="ocean"/>
+            <g clip-path="url(#earthClip)" class="globe-grid">
+              <ellipse cx="250" cy="250" rx="65" ry="205"/>
+              <ellipse cx="250" cy="250" rx="135" ry="205"/>
+              <ellipse cx="250" cy="250" rx="195" ry="205"/>
+              <ellipse cx="250" cy="250" rx="205" ry="70"/>
+              <ellipse cx="250" cy="250" rx="205" ry="140"/>
+              <path d="M45 250h410M250 45v410"/>
+            </g>
+            <g clip-path="url(#earthClip)" class="continents">
+              <path d="M92 126c32-34 73-50 111-30 20 10 34 31 23 49-16 26-44 29-51 53-9 30-22 69-51 72-24 2-31-29-42-48-14-25-20-70 10-96z"/>
+              <path d="M181 282c28-10 55 1 62 30 8 32-12 53-25 79-9 18-9 43-29 48-26 6-40-28-39-51 2-32-14-91 31-106z"/>
+              <path d="M269 104c33-15 68-13 86 8 19 22 55 13 72 38 20 30-14 58-42 57-30-1-41 16-55 35-13 17-33 18-48 5-20-17-10-42 2-62 14-23-39-66-15-81z"/>
+              <path d="M287 251c30-11 68 2 79 37 10 31-9 84-42 100-24 12-43-10-47-36-5-31-23-88 10-101z"/>
+              <path d="M386 338c24-8 56 3 61 28 5 23-22 42-46 36-22-5-40-53-15-64z"/>
+            </g>
+          </svg>
+          <div class="earth-logo">UN</div>
+        </div>
+        <span class="floating-label fl1">PEACE</span>
+        <span class="floating-label fl2">HEALTH</span>
+        <span class="floating-label fl3">EDUCATION</span>
+        <span class="floating-label fl4">CLIMATE</span>
+        <div class="network-status"><i></i> LIVE GLOBAL NETWORK</div>
+      </div>
+    </section>
+
+    <section class="world-clocks" aria-label="UN office clocks">
+      <article><small>UN HQ • NEW YORK</small><strong data-zone="America/New_York">--:--:--</strong></article>
+      <article><small>GENEVA</small><strong data-zone="Europe/Zurich">--:--:--</strong></article>
+      <article><small>VIENNA</small><strong data-zone="Europe/Vienna">--:--:--</strong></article>
+      <article><small>NAIROBI</small><strong data-zone="Africa/Nairobi">--:--:--</strong></article>
+    </section>
+
+
+    <section id="charter" data-room="01" class="section charter-section presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">01 • THE FOUNDING DOCUMENT</p>
+        <h2>The UN Charter and Its Core Values</h2>
+        <p>The Charter is the constitutional foundation of the United Nations. It explains the Organization’s purposes, principles, institutions and responsibilities.</p>
+      </div>
+
+      <div class="charter-layout">
+        <article class="charter-document reveal">
+          <div class="document-seal">UN</div>
+          <p class="eyebrow">SIGNED IN SAN FRANCISCO • 1945</p>
+          <h3>Charter of the United Nations</h3>
+          <p>The Charter establishes a system of international cooperation based on sovereign equality, peaceful settlement of disputes, human dignity and collective action.</p>
+          <div class="charter-facts">
+            <span><b>19</b><small>Chapters</small></span>
+            <span><b>111</b><small>Articles</small></span>
+            <span><b>24 Oct</b><small>UN Day</small></span>
+          </div>
+          <a class="button primary small" href="https://www.un.org/en/about-us/un-charter" target="_blank" rel="noopener">Read the Official Charter</a>
+        </article>
+
+        <div class="value-grid reveal" id="valueGrid">
+          <button class="value-card active" type="button" data-value="peace"><span>🕊️</span><b>Peace</b><small>Settle disputes peacefully</small></button>
+          <button class="value-card" type="button" data-value="dignity"><span>⚖️</span><b>Human Dignity</b><small>Protect rights and freedoms</small></button>
+          <button class="value-card" type="button" data-value="equality"><span>🤝</span><b>Equality</b><small>Sovereign equality of states</small></button>
+          <button class="value-card" type="button" data-value="cooperation"><span>🌐</span><b>Cooperation</b><small>Act together on shared problems</small></button>
+          <button class="value-card" type="button" data-value="law"><span>📜</span><b>International Law</b><small>Rules for peaceful relations</small></button>
+          <button class="value-card" type="button" data-value="future"><span>🌱</span><b>Future Generations</b><small>Prevent war and build progress</small></button>
+          <article id="valueDetail" class="value-detail">
+            <p class="eyebrow">CORE VALUE</p>
+            <h3>Peaceful settlement</h3>
+            <p>Member States are expected to resolve international disputes through negotiation, mediation, arbitration, judicial settlement and other peaceful means.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="languages-band reveal">
+        <div><p class="eyebrow">SIX OFFICIAL LANGUAGES</p><h3>A multilingual global organization</h3></div>
+        <div class="language-chips">
+          <span>العربية<small>Arabic</small></span>
+          <span>中文<small>Chinese</small></span>
+          <span>English<small>English</small></span>
+          <span>Français<small>French</small></span>
+          <span>Русский<small>Russian</small></span>
+          <span>Español<small>Spanish</small></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="ecosystem" data-room="02" class="section presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">01 • THE COMPLETE SYSTEM</p>
+        <h2 data-en="One Organization. Many Connected Parts." data-hi="एक संगठन। अनेक जुड़े हुए भाग।">One Organization. Many Connected Parts.</h2>
+        <p data-en="Member States debate and decide, UN bodies coordinate, and agencies and field teams turn agreements into action."
+           data-hi="सदस्य देश विचार-विमर्श और निर्णय लेते हैं, संयुक्त राष्ट्र निकाय समन्वय करते हैं तथा एजेंसियाँ और क्षेत्रीय दल समझौतों को कार्य में बदलते हैं।">
+           Member States debate and decide, UN bodies coordinate, and agencies and field teams turn agreements into action.
+        </p>
+      </div>
+
+      <div class="ecosystem-stage reveal">
+        <svg class="ecosystem-lines" viewBox="0 0 1000 650" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M500 325L170 125M500 325L830 125M500 325L115 340M500 325L885 340M500 325L250 545M500 325L750 545"/>
+        </svg>
+        <button class="ecosystem-core" type="button" data-node="un">
+          <span>🌐</span><b>UNITED<br>NATIONS</b><small>Global cooperation</small>
+        </button>
+        <button class="eco-node pos1" type="button" data-node="organs"><span>🏛️</span><b>Principal Organs</b></button>
+        <button class="eco-node pos2" type="button" data-node="agencies"><span>⚙️</span><b>Specialized Agencies</b></button>
+        <button class="eco-node pos3" type="button" data-node="funds"><span>🤝</span><b>Funds & Programmes</b></button>
+        <button class="eco-node pos4" type="button" data-node="peace"><span>🕊️</span><b>Peace & Security</b></button>
+        <button class="eco-node pos5" type="button" data-node="rights"><span>⚖️</span><b>Human Rights</b></button>
+        <button class="eco-node pos6" type="button" data-node="sdg"><span>🎯</span><b>Sustainable Development</b></button>
+        <article id="ecosystemInfo" class="ecosystem-info">
+          <p class="eyebrow">SELECT A NODE</p>
+          <h3>Explore the UN ecosystem</h3>
+          <p>Click a connected part to understand its role.</p>
+        </article>
+      </div>
+
+      <div id="organGrid" class="organ-grid"></div>
+    </section>
+
+    <section id="agencies" data-room="03" class="section section-alt presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">02 • OFFICIAL ORGANIZATIONS</p>
+        <h2 data-en="Agency and Organ Explorer" data-hi="एजेंसी और अंग अन्वेषक">Agency and Organ Explorer</h2>
+        <p>Search or filter the cards. Every profile contains a local QR code for its official website.</p>
+      </div>
+      <div class="agency-toolbar reveal">
+        <label class="searchbox"><span>⌕</span><input id="agencySearch" type="search" placeholder="Search WHO, UNICEF, education, health..." aria-label="Search agencies"></label>
+        <div id="agencyFilters" class="filters"></div>
+      </div>
+      <div id="agencyGrid" class="agency-grid"></div>
+      <p id="agencyEmpty" class="empty-state" hidden>No matching organization found.</p>
+
+      <div id="agency-compare" class="agency-compare-lab reveal">
+        <div class="compare-heading">
+          <div>
+            <p class="eyebrow">AGENCY COMPARISON LAB</p>
+            <h3>Compare Two UN Organizations</h3>
+            <p>Select any two organizations to compare their history, location, functions and areas of work.</p>
+          </div>
+          <button id="swapAgencies" class="button glass small" type="button">Swap ↔</button>
+        </div>
+        <div class="compare-selectors">
+          <label><span>Organization A</span><select id="compareAgencyA"></select></label>
+          <div class="compare-vs">VS</div>
+          <label><span>Organization B</span><select id="compareAgencyB"></select></label>
+        </div>
+        <div id="agencyCompareResults" class="agency-compare-results"></div>
+      </div>
+    </section>
+
+
+    <section id="work" data-room="04" class="section work-section presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">04 • THE UN IN ACTION</p>
+        <h2>From International Decisions to Real-World Action</h2>
+        <p>The UN brings together diplomacy, law, expertise, finance and field operations. Select a pillar to see how organizations coordinate.</p>
+      </div>
+
+      <div class="work-layout">
+        <div class="pillar-rail reveal" id="pillarRail">
+          <button class="pillar-card active" type="button" data-pillar="peace"><span>🕊️</span><b>Peace & Security</b><small>Prevent conflict and build peace</small></button>
+          <button class="pillar-card" type="button" data-pillar="rights"><span>⚖️</span><b>Human Rights</b><small>Protect dignity and equality</small></button>
+          <button class="pillar-card" type="button" data-pillar="humanitarian"><span>⛑️</span><b>Humanitarian Action</b><small>Respond when lives are at risk</small></button>
+          <button class="pillar-card" type="button" data-pillar="development"><span>🌱</span><b>Development</b><small>Advance the 2030 Agenda</small></button>
+          <button class="pillar-card" type="button" data-pillar="law"><span>📜</span><b>International Law</b><small>Create rules for cooperation</small></button>
+        </div>
+
+        <article id="pillarDetail" class="pillar-detail reveal">
+          <div class="pillar-visual"><span>🕊️</span><i></i></div>
+          <p class="eyebrow">PEACE & SECURITY</p>
+          <h3>Prevent, mediate, protect and rebuild</h3>
+          <p>Diplomacy and early warning aim to prevent violence. When conflict occurs, the UN may support mediation, peacekeeping, humanitarian access and peacebuilding.</p>
+          <div class="agency-tags"><span>Security Council</span><span>DPPA</span><span>Peacekeeping</span><span>Peacebuilding</span></div>
+          <a class="button primary small" href="#peace">Explore Peacekeeping</a>
+        </article>
+      </div>
+
+      <div class="action-process reveal">
+        <article><b>01</b><h3>Identify</h3><p>Collect evidence, assess needs and hear affected communities.</p></article>
+        <i>→</i>
+        <article><b>02</b><h3>Decide</h3><p>Member States negotiate, vote and agree on mandates.</p></article>
+        <i>→</i>
+        <article><b>03</b><h3>Coordinate</h3><p>Agencies, governments and partners divide responsibilities.</p></article>
+        <i>→</i>
+        <article><b>04</b><h3>Deliver</h3><p>Field teams provide services, protection, expertise and support.</p></article>
+        <i>→</i>
+        <article><b>05</b><h3>Review</h3><p>Results are monitored and programmes are improved.</p></article>
+      </div>
+
+      <div class="issues-explorer reveal">
+        <div class="issues-header">
+          <div><p class="eyebrow">GLOBAL ISSUES EXPLORER</p><h3>One challenge often needs many agencies</h3></div>
+          <div id="issueTabs" class="issue-tabs"></div>
+        </div>
+        <article id="issueDetail" class="issue-detail"></article>
+      </div>
+    </section>
+
+
+    <section id="funding" data-room="04A" class="section funding-section presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">05A • EDUCATIONAL FUNDING MODEL</p>
+        <h2>Build a Global Cooperation Plan</h2>
+        <p>Allocate 100 exhibition points among five priorities. This activity demonstrates how difficult international priority-setting can be; it does not represent the real UN budget.</p>
+      </div>
+
+      <div class="funding-layout">
+        <article class="allocation-console reveal">
+          <div class="allocation-total">
+            <div><span id="fundingUsed">100</span><small>Points allocated</small></div>
+            <div><span id="fundingRemaining">0</span><small>Points remaining</small></div>
+          </div>
+
+          <div class="funding-sliders">
+            <label data-fund-row="peace"><span>🕊️ Peace & Security</span><output>20</output><input type="range" min="0" max="100" value="20" data-fund="peace"></label>
+            <label data-fund-row="health"><span>🏥 Health</span><output>20</output><input type="range" min="0" max="100" value="20" data-fund="health"></label>
+            <label data-fund-row="education"><span>📚 Education</span><output>20</output><input type="range" min="0" max="100" value="20" data-fund="education"></label>
+            <label data-fund-row="climate"><span>🌍 Climate & Environment</span><output>20</output><input type="range" min="0" max="100" value="20" data-fund="climate"></label>
+            <label data-fund-row="humanitarian"><span>⛑️ Humanitarian Relief</span><output>20</output><input type="range" min="0" max="100" value="20" data-fund="humanitarian"></label>
+          </div>
+
+          <div class="funding-actions">
+            <button id="balancedFunding" class="button primary small" type="button">Balanced Plan</button>
+            <button id="crisisFunding" class="button glass small" type="button">Emergency Plan</button>
+            <button id="resetFunding" class="button glass small" type="button">Reset</button>
+          </div>
+        </article>
+
+        <article class="funding-impact reveal">
+          <p class="eyebrow">YOUR PRIORITY PROFILE</p>
+          <h3 id="fundingTitle">Balanced global cooperation</h3>
+          <p id="fundingDescription">Your plan gives equal attention to peace, health, education, climate and humanitarian response.</p>
+          <div id="fundingBars" class="funding-bars"></div>
+          <div id="fundingAgencies" class="funding-agencies"></div>
+          <div class="funding-note"><b>How UN funding works:</b> the regular budget and peacekeeping use assessed contributions, while many funds and programmes also rely heavily on voluntary contributions.</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="map" data-room="05" class="section presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">03 • GLOBAL PRESENCE</p>
+        <h2 data-en="Interactive Headquarters Map" data-hi="इंटरैक्टिव मुख्यालय मानचित्र">Interactive Headquarters Map</h2>
+        <p>Select a city to discover major UN offices and organizations.</p>
+      </div>
+
+      <div class="map-shell reveal">
+        <div class="map-canvas accurate-map-canvas" role="img" aria-label="Accurate world map showing major United Nations locations">
+          <img class="accurate-world-map" src="assets/maps/world_robinson.svg" alt="World map in Robinson projection">
+          <div class="map-vignette" aria-hidden="true"></div>
+          <div id="mapMarkers"></div>
+        </div>
+        <article id="cityPanel" class="city-panel">
+          <p class="eyebrow">SELECT A LOCATION</p>
+          <h3>Worldwide UN Network</h3>
+          <p>Major centres connect global diplomacy, law, health, culture, development and humanitarian action.</p>
+          <div class="city-list" id="cityList"></div>
+        </article>
+      </div>
+    </section>
+
+
+    <section id="countries" data-room="05A" class="section countries-section section-alt presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">06A • 193 MEMBER STATES</p>
+        <h2>Country and Region Explorer</h2>
+        <p>Search all United Nations Member States, filter by broad geographic region, and open a country spotlight.</p>
+      </div>
+
+      <div class="country-toolbar reveal">
+        <label class="country-search"><span>⌕</span><input id="countrySearch" type="search" placeholder="Search India, Brazil, Kenya..." autocomplete="off"></label>
+        <div id="countryRegionFilters" class="country-region-filters"></div>
+        <button id="randomCountry" class="button primary small" type="button">Random Spotlight</button>
+      </div>
+
+      <div class="country-layout">
+        <div>
+          <div class="country-results-heading"><span id="countryResultCount">193 countries</span><small>Select a country card</small></div>
+          <div id="countryGrid" class="country-grid reveal"></div>
+          <button id="countryLoadMore" class="button glass country-more" type="button">Show More Countries</button>
+        </div>
+
+        <article id="countrySpotlight" class="country-spotlight reveal">
+          <div class="country-flag-large">🇺🇳</div>
+          <p class="eyebrow">COUNTRY SPOTLIGHT</p>
+          <h3>Select a Member State</h3>
+          <p>Every UN Member State participates in the General Assembly and has one vote.</p>
+        </article>
+      </div>
+
+      <div id="regionDashboard" class="region-dashboard reveal"></div>
+    </section>
+
+    <section id="peace" data-room="06" class="section section-alt presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">04 • PEACE IN ACTION</p>
+        <h2 data-en="Peacekeeping Command Centre" data-hi="शांति स्थापना कमांड केंद्र">Peacekeeping Command Centre</h2>
+        <p>More than 50,000 peacekeepers serve in 11 current UN peacekeeping missions.</p>
+      </div>
+      <div class="peace-dashboard reveal">
+        <div class="radar">
+          <div class="radar-sweep"></div><i class="blip b1"></i><i class="blip b2"></i><i class="blip b3"></i>
+          <span>UN</span>
+        </div>
+        <div class="peace-stat-grid">
+          <article><strong>11</strong><span>Current missions</span></article>
+          <article><strong>50K+</strong><span>Personnel serving</span></article>
+          <article><strong>3</strong><span>Core components: military, police, civilian</span></article>
+          <article><strong>1948</strong><span>Peacekeeping began</span></article>
+        </div>
+      </div>
+      <div id="missionGrid" class="mission-grid"></div>
+      <div class="peace-process reveal">
+        <article><b>01</b><span>Early warning</span><small>Monitor risks and tensions</small></article>
+        <i>→</i><article><b>02</b><span>Diplomacy</span><small>Dialogue and mediation</small></article>
+        <i>→</i><article><b>03</b><span>Mandate</span><small>Security Council action</small></article>
+        <i>→</i><article><b>04</b><span>Deployment</span><small>Military, police and civilians</small></article>
+        <i>→</i><article><b>05</b><span>Peacebuilding</span><small>Institutions and recovery</small></article>
+      </div>
+    </section>
+
+
+    <section id="situation-room" data-room="06A" class="section situation-room-section section-alt presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">07A • GLOBAL DECISION-MAKING</p>
+        <h2>United Nations Global Situation Room</h2>
+        <p>Choose a crisis, make three coordinated decisions and see how diplomacy, protection and international cooperation affect the outcome.</p>
+      </div>
+
+      <div class="situation-dashboard">
+        <div class="situation-map-panel reveal">
+          <div class="situation-radar">
+            <div class="situation-radar-sweep"></div>
+            <span id="situationIcon">🌀</span>
+            <i class="signal s1"></i><i class="signal s2"></i><i class="signal s3"></i>
+          </div>
+          <div class="situation-selector">
+            <p class="eyebrow">SELECT SCENARIO</p>
+            <div id="situationTabs"></div>
+          </div>
+        </div>
+
+        <article class="situation-brief reveal">
+          <p class="eyebrow">SITUATION BRIEF</p>
+          <h3 id="situationTitle">Severe Cyclone Emergency</h3>
+          <p id="situationText">A powerful cyclone has affected several coastal regions. Transport, hospitals and clean-water systems are under pressure.</p>
+          <div id="situationNeeds" class="situation-needs"></div>
+          <div class="situation-clock"><span>SIMULATED RESPONSE WINDOW</span><b>72 HOURS</b></div>
+        </article>
+      </div>
+
+      <div id="situationDecisionGrid" class="situation-decision-grid reveal"></div>
+
+      <div class="situation-result-shell reveal">
+        <article class="situation-scoreboard">
+          <div><strong id="situationPeace">0</strong><span>Diplomacy</span></div>
+          <div><strong id="situationProtection">0</strong><span>Protection</span></div>
+          <div><strong id="situationCooperation">0</strong><span>Cooperation</span></div>
+        </article>
+        <article id="situationOutcome" class="situation-outcome">
+          <span>◌</span>
+          <div><p class="eyebrow">OUTCOME PENDING</p><h3>Complete all three decisions</h3><p>Your coordination assessment will appear here.</p></div>
+        </article>
+        <div class="situation-actions">
+          <button id="evaluateSituation" class="button primary" type="button">Evaluate Response</button>
+          <button id="resetSituation" class="button glass" type="button">Reset Decisions</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="sdgs" data-room="07" class="section presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">05 • AGENDA 2030</p>
+        <h2 data-en="The 17 Sustainable Development Goals" data-hi="17 सतत विकास लक्ष्य">The 17 Sustainable Development Goals</h2>
+        <p>Choose a goal to view its purpose, example and an illustrative exhibition indicator.</p>
+      </div>
+      <div class="sdg-layout">
+        <div id="sdgGrid" class="sdg-grid reveal"></div>
+        <article id="sdgDetail" class="sdg-detail reveal"></article>
+      </div>
+    </section>
+
+
+    <section id="sdg-city" data-room="08" class="section section-alt presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">06 • INTERACTIVE FUTURE</p>
+        <h2>SDG City 2030</h2>
+        <p>Explore a future city where hospitals, schools, clean energy, water systems, green transport and nature work together.</p>
+      </div>
+      <div class="sdg-city-layout reveal">
+        <div class="sdg-city-scene" id="sdgCityScene">
+          <div class="city-skyline">
+            <button class="city-building hospital" data-city-goal="2"><span>🏥</span><b>Health Centre</b></button>
+            <button class="city-building school" data-city-goal="3"><span>🏫</span><b>Future School</b></button>
+            <button class="city-building energy" data-city-goal="6"><span>☀️</span><b>Solar District</b></button>
+            <button class="city-building water" data-city-goal="5"><span>💧</span><b>Water Plant</b></button>
+            <button class="city-building housing" data-city-goal="10"><span>🏘️</span><b>Inclusive Housing</b></button>
+            <button class="city-building industry" data-city-goal="8"><span>🏭</span><b>Green Innovation</b></button>
+            <button class="city-building justice" data-city-goal="15"><span>⚖️</span><b>Justice Centre</b></button>
+            <button class="city-building partnership" data-city-goal="16"><span>🤝</span><b>Partnership Hub</b></button>
+          </div>
+          <div class="city-road"><i></i><span class="city-bus">🚌</span><span class="city-bike">🚲</span></div>
+          <div class="city-nature"><span>🌳</span><span>🌲</span><span>🌊</span><span>🐟</span></div>
+          <div class="city-wind"><span>✦</span><span>✦</span><span>✦</span></div>
+        </div>
+        <article id="sdgCityPanel" class="sdg-city-panel">
+          <p class="eyebrow">CLICK A BUILDING</p>
+          <h3>A city where every goal connects</h3>
+          <p>Choose a building to discover the Sustainable Development Goal behind it.</p>
+          <div class="city-connection-list">
+            <span>People</span><i>→</i><span>Planet</span><i>→</i><span>Prosperity</span><i>→</i><span>Peace</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="simulators" data-room="09" class="section section-alt presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">06 • BECOME A DELEGATE</p>
+        <h2 data-en="Interactive Decision Simulators" data-hi="इंटरैक्टिव निर्णय सिमुलेटर">Interactive Decision Simulators</h2>
+      </div>
+      <div class="sim-tabs reveal">
+        <button class="active" type="button" data-sim="councilSim">Security Council</button>
+        <button type="button" data-sim="assemblySim">General Assembly</button>
+        <button type="button" data-sim="crisisSim">Humanitarian Crisis</button>
+        <button type="button" data-sim="munSim">Model UN Challenge</button>
+      </div>
+
+      <div id="councilSim" class="sim-panel reveal">
+        <div class="sim-heading">
+          <div><p class="eyebrow">15-MEMBER CHAMBER • 2026</p><h3>Security Council Voting Board</h3></div>
+          <button id="resetCouncil" class="button glass small" type="button">Reset</button>
+        </div>
+        <div class="resolution-card">
+          <small>DRAFT RESOLUTION SC/EXHIBITION/2026</small>
+          <h3>Increase international cooperation to protect civilians and expand climate education.</h3>
+          <p>A substantive draft needs at least nine Yes votes and no No vote from a permanent member.</p>
+        </div>
+        <div id="councilBoard" class="council-board"></div>
+        <div class="vote-summary">
+          <article><strong id="yesCount">0</strong><span>YES</span></article>
+          <article><strong id="noCount">0</strong><span>NO</span></article>
+          <article><strong id="abstainCount">0</strong><span>ABSTAIN</span></article>
+          <article id="councilDecision" class="decision"><strong>Awaiting votes</strong><span>Select a vote for each member.</span></article>
+        </div>
+        <div class="sim-actions">
+          <button id="autoVote" class="button primary" type="button">Passing Example</button>
+          <button id="vetoDemo" class="button danger" type="button">Veto Example</button>
+        </div>
+      </div>
+
+
+      <div id="assemblySim" class="sim-panel ga-simulator" hidden>
+        <div class="sim-heading ga-sim-heading">
+          <div>
+            <p class="eyebrow">193 MEMBER STATES • ONE STATE, ONE VOTE</p>
+            <h3>General Assembly Voting Hall</h3>
+          </div>
+          <div class="ga-top-actions">
+            <a class="button glass small" href="https://www.un.org/en/ga/about/background.shtml" target="_blank" rel="noopener">Official Rules</a>
+            <button id="gaReset" class="button glass small" type="button">Reset Hall</button>
+          </div>
+        </div>
+
+        <div class="resolution-card ga-resolution">
+          <small>DRAFT RESOLUTION A/EXHIBITION/2026/1</small>
+          <h3>“Member States should strengthen climate education and international cooperation.”</h3>
+          <p>Choose the voting rule, cast delegate votes, and close the vote to see whether the draft resolution is adopted.</p>
+        </div>
+
+        <div class="ga-control-grid ga-named-controls">
+          <article class="ga-rule-card">
+            <p class="eyebrow">VOTING RULE</p>
+            <label for="gaRule">Question type</label>
+            <select id="gaRule">
+              <option value="simple">Other question — simple majority</option>
+              <option value="twoThirds">Important question — two-thirds majority</option>
+            </select>
+            <div class="ga-rule-explainer" id="gaRuleExplainer">
+              A simple majority of members present and voting is required.
+            </div>
+            <label for="gaRegionFilter">Display region</label>
+            <select id="gaRegionFilter">
+              <option value="All">All regions</option>
+              <option value="Africa">Africa</option>
+              <option value="Americas">Americas</option>
+              <option value="Asia">Asia</option>
+              <option value="Europe">Europe</option>
+              <option value="Oceania">Oceania</option>
+            </select>
+          </article>
+
+          <article class="ga-delegate-console">
+            <p class="eyebrow">NAMED DELEGATE CONSOLE</p>
+            <label for="gaCountrySearch">Find a Member State</label>
+            <input id="gaCountrySearch" type="search" placeholder="Search India, France, Kenya..." autocomplete="off">
+            <select id="gaCountrySelect" size="5" aria-label="Select a UN Member State"></select>
+            <div id="gaSelectedDelegate" class="ga-selected-delegate">
+              <span>🇺🇳</span><div><small>SELECTED DELEGATE</small><strong>Select a country</strong></div>
+            </div>
+            <div class="ga-cast-buttons">
+              <button id="gaCastYes" class="ga-cast yes" type="button"><span>●</span> YES</button>
+              <button id="gaCastNo" class="ga-cast no" type="button"><span>●</span> NO</button>
+              <button id="gaCastAbstain" class="ga-cast abstain" type="button"><span>●</span> ABSTAIN</button>
+            </div>
+            <small id="gaRemainingText">193 Member States have not voted.</small>
+          </article>
+        </div>
+
+        <div class="ga-hall-shell">
+          <div class="ga-hall-header">
+            <div>
+              <p class="eyebrow">GENERAL ASSEMBLY HALL</p>
+              <h4>193 Member-State Seats</h4>
+            </div>
+            <div class="ga-legend">
+              <span><i class="yes"></i>Yes</span>
+              <span><i class="no"></i>No</span>
+              <span><i class="abstain"></i>Abstain</span>
+              <span><i class="pending"></i>Not recorded</span>
+            </div>
+          </div>
+          <div class="ga-podium"><span>UN</span><b>PRESIDENT OF THE GENERAL ASSEMBLY</b></div>
+          <div id="gaSeatGrid" class="ga-seat-grid" aria-label="193 General Assembly seats"></div>
+        </div>
+
+        <div class="ga-vote-dashboard">
+          <article class="ga-count yes"><strong id="gaYesCount">0</strong><span>YES</span></article>
+          <article class="ga-count no"><strong id="gaNoCount">0</strong><span>NO</span></article>
+          <article class="ga-count abstain"><strong id="gaAbstainCount">0</strong><span>ABSTAIN</span></article>
+          <article class="ga-count pending"><strong id="gaPendingCount">193</strong><span>NOT RECORDED</span></article>
+          <article class="ga-threshold">
+            <small>Votes needed to adopt</small>
+            <strong id="gaThreshold">—</strong>
+            <span id="gaPresentVoting">Present and voting: 0</span>
+          </article>
+        </div>
+
+        <div class="ga-report-shell">
+          <div class="ga-report-heading">
+            <div><p class="eyebrow">NAMED VOTE RECORD</p><h4>Country-by-country result</h4></div>
+            <div class="ga-report-actions">
+              <button id="gaDownloadReport" class="button glass small" type="button">Download CSV</button>
+              <button id="gaPrintReport" class="button glass small" type="button">Print Report</button>
+            </div>
+          </div>
+          <div id="gaRegionSummary" class="ga-region-summary"></div>
+          <div class="ga-table-wrap">
+            <table class="ga-vote-table">
+              <thead><tr><th>Member State</th><th>Region</th><th>Vote</th></tr></thead>
+              <tbody id="gaVoteTable"><tr><td colspan="3">No votes recorded yet.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="gaDecision" class="ga-decision">
+          <span class="ga-decision-light"></span>
+          <div>
+            <strong>Voting has not closed</strong>
+            <p>Cast votes or select a demonstration, then close the vote.</p>
+          </div>
+        </div>
+
+        <div class="ga-action-row">
+          <button id="gaPassDemo" class="button primary" type="button">Adopted Example</button>
+          <button id="gaRejectDemo" class="button danger" type="button">Rejected Example</button>
+          <button id="gaCloseVote" class="button ga-close-button" type="button">Close Voting</button>
+        </div>
+
+        <p class="ga-official-note">
+          In the General Assembly, each Member State has one vote. Important questions require a two-thirds majority of members present and voting; other questions require a simple majority. Abstentions are not counted as “present and voting”.
+        </p>
+      </div>
+
+
+      <div id="munSim" class="sim-panel mun-simulator" hidden>
+        <div class="sim-heading">
+          <div><p class="eyebrow">MODEL UNITED NATIONS</p><h3>Delegate Speech Challenge</h3></div>
+          <button id="munNewChallenge" class="button glass small" type="button">New Challenge</button>
+        </div>
+
+        <div class="mun-layout">
+          <article class="mun-setup">
+            <label>Representing
+              <select id="munCountry"></select>
+            </label>
+            <label>Committee topic
+              <select id="munTopic">
+                <option>Protecting civilians during armed conflict</option>
+                <option>Climate education and youth participation</option>
+                <option>Access to clean water during emergencies</option>
+                <option>International cooperation against pandemics</option>
+                <option>Protecting refugees and displaced children</option>
+                <option>Responsible artificial intelligence for development</option>
+              </select>
+            </label>
+            <div id="munPosition" class="mun-position">
+              <p class="eyebrow">YOUR POSITION</p>
+              <h4>Support cooperation while protecting national priorities.</h4>
+              <p>Explain the problem, state your country's approach and propose one practical international action.</p>
+            </div>
+            <label>Speech notes
+              <textarea id="munNotes" rows="8" placeholder="Honourable Chair, distinguished delegates..."></textarea>
+            </label>
+          </article>
+
+          <article class="mun-timer-card">
+            <p class="eyebrow">SPEAKING TIME</p>
+            <div id="munTimer" class="mun-timer">01:00</div>
+            <div class="mun-timer-actions">
+              <button id="munStart" class="button primary" type="button">Start</button>
+              <button id="munPause" class="button glass" type="button">Pause</button>
+              <button id="munReset" class="button glass" type="button">Reset</button>
+            </div>
+            <div class="mun-speech-structure">
+              <span><b>10 sec</b> Address the committee</span>
+              <span><b>15 sec</b> Explain the problem</span>
+              <span><b>20 sec</b> Present your position</span>
+              <span><b>15 sec</b> Propose action</span>
+            </div>
+            <button id="munPrintCard" class="button mun-print" type="button">Print Delegate Card</button>
+          </article>
+        </div>
+      </div>
+
+      <div id="crisisSim" class="sim-panel" hidden>
+        <div class="sim-heading"><div><p class="eyebrow">COORDINATED RESPONSE</p><h3>Humanitarian Crisis Simulator</h3></div></div>
+        <div id="crisisChoices" class="crisis-choices"></div>
+        <div id="crisisResult" class="crisis-result">
+          <span class="crisis-symbol">⚠️</span>
+          <div><h3>Select a crisis</h3><p>The response pathway will appear here.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" data-room="10" class="section presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">08 • OFFLINE PHOTO MUSEUM</p>
+        <h2 data-en="Inside the United Nations" data-hi="संयुक्त राष्ट्र के अंदर">Inside the United Nations</h2>
+        <p>Explore locally stored photographs of important UN buildings, chambers and humanitarian work. Image credits are included.</p>
+      </div>
+      <div id="galleryGrid" class="gallery-grid"></div>
+      <div id="chamber-tour" class="chamber-tour reveal">
+        <div class="chamber-tour-heading">
+          <div><p class="eyebrow">INTERACTIVE CHAMBER TOUR</p><h3>Explore the Rooms Where Diplomacy Happens</h3></div>
+          <div id="chamberTabs" class="chamber-tabs">
+            <button class="active" type="button" data-chamber="ga">General Assembly</button>
+            <button type="button" data-chamber="sc">Security Council</button>
+          </div>
+        </div>
+        <div class="chamber-tour-layout">
+          <div id="chamberImage" class="chamber-image">
+            <img id="chamberPhoto" src="assets/photos/general_assembly.jpg" alt="General Assembly Hall">
+            <div id="chamberHotspots"></div>
+          </div>
+          <article id="chamberInfo" class="chamber-info">
+            <p class="eyebrow">SELECT A HOTSPOT</p>
+            <h3>General Assembly Hall</h3>
+            <p>Tap a glowing marker to learn how the chamber functions.</p>
+          </article>
+        </div>
+      </div>
+
+    </section>
+
+
+    <section id="india-un" data-room="11" class="section india-un-section presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">09 • INDIA AND GLOBAL COOPERATION</p>
+        <h2>India and the United Nations</h2>
+        <p>India was a founding Member State and has played a long-standing role in peacekeeping, human rights and sustainable development.</p>
+      </div>
+      <div class="india-un-layout">
+        <article class="india-map-card reveal">
+          <div class="india-symbol">🇮🇳</div>
+          <p class="eyebrow">FOUNDING MEMBER</p>
+          <h3>India at the United Nations</h3>
+          <p>India participated in the San Francisco Conference and became one of the original Member States of the United Nations in 1945.</p>
+          <a class="button primary small" href="https://india.un.org/en" target="_blank" rel="noopener">Official UN India Website</a>
+        </article>
+        <div class="india-stat-grid reveal">
+          <article><strong>1945</strong><span>Founding Member State</span></article>
+          <article><strong>275K+</strong><span>Indian personnel have served in UN peacekeeping</span></article>
+          <article><strong>5K+</strong><span>Indian peacekeepers deployed in early 2026</span></article>
+          <article><strong>17</strong><span>SDGs supported through national and state action</span></article>
+        </div>
+      </div>
+      <div class="india-timeline reveal">
+        <article><b>1945</b><h3>Founding Member</h3><p>India joined the original United Nations membership.</p></article>
+        <article><b>1948</b><h3>Human Rights Contribution</h3><p>Indian delegate Hansa Mehta helped shape inclusive language in the Universal Declaration of Human Rights.</p></article>
+        <article><b>1950s–Today</b><h3>Peacekeeping</h3><p>Indian military, police and medical personnel have served across many missions.</p></article>
+        <article><b>2015–2030</b><h3>SDG Partnership</h3><p>The UN Country Team works with Indian institutions and state governments on the Sustainable Development Goals.</p></article>
+      </div>
+      <div class="india-actions reveal">
+        <button id="indiaPeaceBtn" class="button glass" type="button">Explore Indian Peacekeeping</button>
+        <button id="indiaQuizBtn" class="button glass" type="button">Ask AI About India</button>
+        <a class="button glass" href="https://india.un.org/en/about/un-entities-in-country" target="_blank" rel="noopener">UN Entities in India</a>
+      </div>
+    </section>
+
+    <section id="history" data-room="12" class="section section-alt presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">08 • HISTORY MUSEUM</p>
+        <h2 data-en="Eight Decades of Cooperation" data-hi="आठ दशकों का सहयोग">Eight Decades of Cooperation</h2>
+      </div>
+      <div class="timeline reveal">
+        <article><b>1945</b><h3>United Nations Founded</h3><p>The UN Charter entered into force after the Second World War.</p></article>
+        <article><b>1948</b><h3>Human Rights Declaration</h3><p>The Universal Declaration of Human Rights was adopted.</p></article>
+        <article><b>1948</b><h3>Peacekeeping Begins</h3><p>The first UN peacekeeping operation was established.</p></article>
+        <article><b>1960s</b><h3>Decolonization</h3><p>Many newly independent states joined the organization.</p></article>
+        <article><b>2000</b><h3>Millennium Development Goals</h3><p>Eight goals focused international development efforts.</p></article>
+        <article><b>2015</b><h3>SDGs Adopted</h3><p>Countries agreed on the 2030 Agenda and its 17 goals.</p></article>
+      </div>
+    </section>
+
+
+
+    <section id="international-days" data-room="13A" class="section international-days-section presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">14 • GLOBAL OBSERVANCES</p>
+        <h2>United Nations International Days Calendar</h2>
+        <p>Explore selected international observances that promote awareness, education and action on global issues.</p>
+      </div>
+      <div class="days-layout">
+        <article class="days-calendar reveal">
+          <div class="days-toolbar">
+            <label>Month<select id="daysMonthFilter"></select></label>
+            <button id="daysTodayBtn" class="button glass small" type="button">Show Current Month</button>
+          </div>
+          <div id="daysGrid" class="days-grid"></div>
+        </article>
+        <article id="daySpotlight" class="day-spotlight reveal">
+          <div class="day-date-large">24</div>
+          <p class="eyebrow">OCTOBER</p>
+          <h3>United Nations Day</h3>
+          <p>UN Day marks the anniversary of the entry into force of the UN Charter in 1945.</p>
+          <a class="button primary small" href="https://www.un.org/en/observances/un-day" target="_blank" rel="noopener">Official Observance Page</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="knowledge" class="section knowledge-section section-alt presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">13 • PROFESSIONAL REFERENCE CENTRE</p>
+        <h2>UN Knowledge Centre</h2>
+        <p>Search important terms, understand UN decision-making, and open trusted official resources.</p>
+      </div>
+
+      <div class="knowledge-layout">
+        <article class="glossary-panel reveal">
+          <div class="panel-title"><div><p class="eyebrow">SEARCHABLE GLOSSARY</p><h3>Key UN Terms</h3></div><span>40+ concepts</span></div>
+          <label class="glossary-search"><span>⌕</span><input id="glossarySearch" type="search" placeholder="Search veto, mandate, refugee, treaty..."></label>
+          <div id="glossaryList" class="glossary-list"></div>
+        </article>
+
+        <article class="decision-panel reveal">
+          <p class="eyebrow">HOW A RESOLUTION BECOMES ACTION</p>
+          <h3>Decision pathway</h3>
+          <div id="decisionStepper" class="decision-stepper">
+            <button class="active" type="button" data-step="0"><b>1</b><span>Issue raised</span></button>
+            <button type="button" data-step="1"><b>2</b><span>Draft prepared</span></button>
+            <button type="button" data-step="2"><b>3</b><span>Negotiation</span></button>
+            <button type="button" data-step="3"><b>4</b><span>Vote</span></button>
+            <button type="button" data-step="4"><b>5</b><span>Implementation</span></button>
+            <button type="button" data-step="5"><b>6</b><span>Review</span></button>
+          </div>
+          <div id="decisionDetail" class="decision-detail">
+            <span>01</span><div><h4>Issue raised</h4><p>A Member State, UN body or international situation places an issue on the agenda.</p></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="source-centre reveal">
+        <a href="https://www.un.org/en/about-us" target="_blank" rel="noopener"><span>🌐</span><div><b>About the United Nations</b><small>Purpose, history and structure</small></div></a>
+        <a href="https://www.un.org/en/about-us/main-bodies" target="_blank" rel="noopener"><span>🏛️</span><div><b>Principal Organs</b><small>Official constitutional structure</small></div></a>
+        <a href="https://peacekeeping.un.org/en" target="_blank" rel="noopener"><span>🕊️</span><div><b>UN Peacekeeping</b><small>Missions, personnel and mandates</small></div></a>
+        <a href="https://sdgs.un.org/goals" target="_blank" rel="noopener"><span>🎯</span><div><b>SDG Knowledge Platform</b><small>Official goals and targets</small></div></a>
+        <a href="https://media.un.org/" target="_blank" rel="noopener"><span>▶️</span><div><b>UN Web TV</b><small>Meetings and official broadcasts</small></div></a>
+        <a href="https://news.un.org/" target="_blank" rel="noopener"><span>📰</span><div><b>UN News</b><small>Global reporting from the UN system</small></div></a>
+      </div>
+    </section>
+
+    <section id="learning" data-room="14" class="section presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">09 • LEARNING LAB</p>
+        <h2 data-en="Quiz, Games and UN Assistant" data-hi="प्रश्नोत्तरी, खेल और संयुक्त राष्ट्र सहायक">Quiz, Games and UN Assistant</h2>
+      </div>
+      <article id="dailyChallenge" class="daily-challenge reveal">
+        <div class="daily-challenge-icon">✦</div>
+        <div>
+          <p class="eyebrow">DAILY MUSEUM CHALLENGE</p>
+          <h3 id="dailyChallengeTitle">Complete one interactive activity</h3>
+          <p id="dailyChallengeText">A new challenge is selected for each calendar day.</p>
+        </div>
+        <button id="dailyChallengeGo" class="button primary small" type="button">Start Challenge</button>
+        <button id="dailyChallengeComplete" class="button glass small" type="button">Mark Complete</button>
+      </article>
+
+      <div class="learning-grid">
+        <article class="quiz-card reveal">
+          <div class="card-heading"><h3>UN Knowledge Challenge</h3><div id="difficultyButtons"></div></div>
+          <div class="quiz-progress"><span id="quizProgress"></span></div>
+          <p id="quizMeta" class="muted">Question 1</p>
+          <h3 id="quizQuestion"></h3>
+          <div id="quizAnswers" class="quiz-answers"></div>
+          <button id="quizNext" class="button primary" type="button" disabled>Next</button>
+        </article>
+
+        <article class="assistant-card reveal">
+          <div class="assistant-title"><span>🤖</span><div><h3>UN AI Guide</h3><p>Smart offline exhibition assistant</p></div></div>
+          <div id="chatLog" class="chat-log"><div class="bot-message">Hello! Ask about the UN, General Assembly, Security Council, WHO, UNICEF, peacekeeping, veto power or the SDGs.</div></div>
+          <div id="quickPrompts" class="quick-prompts"></div>
+          <form id="chatForm" class="chat-form"><input id="chatInput" required placeholder="Type a question..." autocomplete="off"><button type="submit">Send</button></form>
+        </article>
+      </div>
+
+      <div class="mini-games">
+        <article class="game-card reveal">
+          <span>🏢</span><h3>Guess the Agency</h3><p id="agencyClue"></p><div id="agencyChoices" class="choice-row"></div><strong id="agencyGameResult"></strong>
+        </article>
+        <article class="game-card reveal">
+          <span>🏆</span><h3>Printable Museum Certificate</h3><p>Enter your name after completing the learning zone.</p><input id="studentName" placeholder="Student name"><button id="certificateBtn" class="button primary" type="button">Create Certificate</button>
+        </article>
+      </div>
+    </section>
+
+
+    <section id="diplomacy-lab" data-room="16" class="section diplomacy-section section-alt presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">17 • NEGOTIATION & COOPERATION</p>
+        <h2>Diplomacy and Treaty-Building Lab</h2>
+        <p>Negotiate a shared agreement by balancing national priorities, human needs and international cooperation.</p>
+      </div>
+
+      <div class="diplomacy-layout">
+        <article class="treaty-builder reveal">
+          <div class="treaty-top">
+            <div><p class="eyebrow">DRAFT AGREEMENT</p><h3 id="treatyTitle">Global Water Cooperation Accord</h3></div>
+            <button id="newTreatyChallenge" class="button glass small" type="button">New Challenge</button>
+          </div>
+          <div class="treaty-parties">
+            <label>Delegation A<select id="treatyCountryA"></select></label>
+            <span>+</span>
+            <label>Delegation B<select id="treatyCountryB"></select></label>
+          </div>
+          <div class="treaty-priorities">
+            <p class="eyebrow">SELECT FOUR CLAUSES</p>
+            <div id="treatyClauseList" class="treaty-clause-list"></div>
+          </div>
+          <label class="treaty-notes">Final statement<textarea id="treatyNotes" rows="5" placeholder="The participating states agree to..."></textarea></label>
+          <div class="treaty-actions">
+            <button id="evaluateTreaty" class="button primary" type="button">Evaluate Agreement</button>
+            <button id="printTreaty" class="button glass" type="button">Print Treaty</button>
+          </div>
+        </article>
+
+        <article class="treaty-analysis reveal">
+          <p class="eyebrow">NEGOTIATION ANALYSIS</p>
+          <div class="treaty-score-ring"><span id="treatyScore">0</span><small>/100</small></div>
+          <h3 id="treatyResultTitle">Build your agreement</h3>
+          <p id="treatyResultText">Choose four clauses that balance cooperation, fairness, feasibility and accountability.</p>
+          <div id="treatyBalanceBars" class="treaty-balance-bars"></div>
+          <div class="negotiation-tips">
+            <h4>Diplomatic principles</h4>
+            <span>Listen to both parties</span><span>Use clear and measurable language</span><span>Include implementation and review</span><span>Protect vulnerable communities</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="response-team-lab reveal">
+        <div class="response-team-heading">
+          <div><p class="eyebrow">AGENCY RESPONSE TEAM BUILDER</p><h3>Choose the correct UN response team</h3></div>
+          <button id="newResponseChallenge" class="button glass small" type="button">New Scenario</button>
+        </div>
+        <div class="response-team-grid">
+          <article id="responseScenario" class="response-scenario"></article>
+          <article class="response-agency-pool">
+            <p>Select four agencies:</p>
+            <div id="responseAgencyChoices"></div>
+            <button id="checkResponseTeam" class="button primary" type="button">Check Team</button>
+          </article>
+          <article id="responseTeamResult" class="response-team-result"><span>?</span><h4>Build your response team</h4><p>Select agencies that match the needs of the scenario.</p></article>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="resolution-builder" data-room="17A" class="section resolution-builder-section presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">18 • DRAFTING & NEGOTIATION</p>
+        <h2>Build a United Nations Resolution</h2>
+        <p>Create an educational draft resolution using preambular and operative clauses, preview it in formal format, then print or download it.</p>
+      </div>
+
+      <div class="resolution-builder-layout">
+        <article class="resolution-controls reveal">
+          <div class="resolution-form-grid">
+            <label>Committee
+              <select id="resolutionCommittee">
+                <option>United Nations General Assembly</option>
+                <option>Economic and Social Council</option>
+                <option>Human Rights Council</option>
+                <option>Environment Assembly</option>
+                <option>Model Security Council</option>
+              </select>
+            </label>
+            <label>Main sponsor
+              <select id="resolutionSponsor"></select>
+            </label>
+          </div>
+
+          <label>Topic
+            <input id="resolutionTopic" type="text" value="Strengthening climate education and youth participation">
+          </label>
+
+          <label>Co-sponsors
+            <input id="resolutionCosponsors" type="text" placeholder="Example: Brazil, Kenya, Japan">
+          </label>
+
+          <div class="clause-builder">
+            <div>
+              <p class="eyebrow">PREAMBULAR CLAUSES</p>
+              <div id="preambularClauses" class="clause-choice-list"></div>
+            </div>
+            <div>
+              <p class="eyebrow">OPERATIVE CLAUSES</p>
+              <div id="operativeClauses" class="clause-choice-list"></div>
+            </div>
+          </div>
+
+          <label>Custom operative clause
+            <textarea id="customClause" rows="3" placeholder="Calls upon Member States to..."></textarea>
+          </label>
+
+          <div class="resolution-actions">
+            <button id="resolutionImprove" class="button glass" type="button">Improve Wording</button>
+            <button id="resolutionDownload" class="button primary" type="button">Download Draft</button>
+            <button id="resolutionPrint" class="button glass" type="button">Print Resolution</button>
+          </div>
+        </article>
+
+        <article class="resolution-preview reveal">
+          <div class="resolution-paper">
+            <div class="resolution-paper-head"><span>UN</span><div><small id="resolutionSymbol">A/EXHIBITION/2026/L.1</small><b id="resolutionPreviewCommittee">United Nations General Assembly</b></div></div>
+            <h3 id="resolutionPreviewTitle">Strengthening climate education and youth participation</h3>
+            <p class="resolution-body-name">The General Assembly,</p>
+            <ol id="resolutionPreambularPreview" class="resolution-clause-preview preambular-preview"></ol>
+            <ol id="resolutionOperativePreview" class="resolution-clause-preview operative-preview"></ol>
+            <div class="resolution-signatures"><span>Primary sponsor: <b id="resolutionPreviewSponsor">India</b></span><span>Co-sponsors: <b id="resolutionPreviewCosponsors">—</b></span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+    <section id="careers" data-room="18" class="section careers-section section-alt presentation-stop">
+      <div class="section-heading reveal">
+        <p class="eyebrow">19 • PEOPLE BEHIND THE MISSION</p>
+        <h2>United Nations Careers and Skills Explorer</h2>
+        <p>Discover the kinds of professionals who support diplomacy, health, humanitarian action, law, science, communication and peacebuilding.</p>
+      </div>
+
+      <div id="careerGrid" class="career-grid reveal"></div>
+
+      <div class="career-quiz-layout">
+        <article class="career-quiz reveal">
+          <p class="eyebrow">FIND YOUR UN ROLE</p>
+          <div class="career-quiz-progress"><i id="careerQuizProgress"></i></div>
+          <p id="careerQuizMeta" class="muted">Question 1 of 5</p>
+          <h3 id="careerQuestion">Which activity interests you most?</h3>
+          <div id="careerAnswers" class="career-answers"></div>
+        </article>
+
+        <article id="careerResult" class="career-result reveal">
+          <span>🌐</span>
+          <p class="eyebrow">CAREER MATCH</p>
+          <h3>Complete the five questions</h3>
+          <p>Your suggested role and useful school skills will appear here.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="comparison-section section-alt">
+      <div class="section-heading reveal"><p class="eyebrow">QUICK COMPARISON</p><h2>Six Principal Organs at a Glance</h2></div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Organ</th><th>Composition</th><th>Main Role</th><th>Location</th><th>Special Feature</th></tr></thead>
+          <tbody>
+            <tr><td>General Assembly</td><td>193 Member States</td><td>Debate and recommendations</td><td>New York</td><td>One state, one vote</td></tr>
+            <tr><td>Security Council</td><td>15 members</td><td>Peace and security</td><td>New York</td><td>Five permanent members</td></tr>
+            <tr><td>ECOSOC</td><td>54 members</td><td>Economic and social coordination</td><td>New York</td><td>Connects UN system and NGOs</td></tr>
+            <tr><td>ICJ</td><td>15 judges</td><td>Legal disputes between states</td><td>The Hague</td><td>Principal judicial organ</td></tr>
+            <tr><td>Secretariat</td><td>International staff</td><td>Daily work and implementation</td><td>Worldwide</td><td>Led by Secretary-General</td></tr>
+            <tr><td>Trusteeship Council</td><td>Historic organ</td><td>Supervised trust territories</td><td>New York</td><td>Main mission completed</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="closing-banner">
+      <div><p class="eyebrow">SCHOOL EXHIBITION PROJECT</p><h2>One World Overture • Many Nations • One Shared Future</h2><p>Presented by students of Tender Heart School</p></div>
+      <div class="closing-seal"><strong>2026</strong><small>DIGITAL<br>MUSEUM</small></div>
+    </section>
+  </main>
+
+
+    <section class="photo-credits">
+      <details>
+        <summary>Photo credits and licences</summary>
+        <p>UN Headquarters — Padraic Ryan, Wikimedia Commons, GFDL/CC licence.</p>
+        <p>General Assembly Hall — Basil D Soufi, Wikimedia Commons, CC BY-SA 3.0.</p>
+        <p>Security Council Chamber — Patrick Gruban, Wikimedia Commons, CC BY-SA 2.0.</p>
+        <p>Peace Palace/ICJ — International Court of Justice, public-domain release.</p>
+        <p>UNICEF humanitarian kits — UNICEF Ukraine/A. Krepkih, Wikimedia Commons, CC BY 2.0.</p>
+        <p>WHO Headquarters — Yann Forget, Wikimedia Commons, CC BY-SA.</p>
+      </details>
+    </section>
+
+  <footer>
+    <a class="brand" href="#home"><span class="brand-seal">UN</span><span><b>UNITED NATIONS ECOSYSTEM</b><small>Educational exhibition project</small></span></a>
+    <p>Current information verified on 14 July 2026. Use the official QR links for the latest updates.</p>
+    <a href="#home">Back to top ↑</a>
+  </footer>
+
+
+
+
+
+
+
+
+  <div id="musicMiniPlayer" class="music-mini-player" hidden>
+    <button id="miniMusicOpen" class="mini-music-info" type="button">
+      <span id="miniMusicIcon">🌍</span>
+      <span><b id="miniMusicTitle">One World Overture</b><small id="miniMusicSubtitle">Premium original soundtrack</small></span>
+    </button>
+    <button id="miniMusicPlay" type="button" aria-label="Play or pause">▶</button>
+    <button id="miniMusicNext" type="button" aria-label="Next track">›</button>
+  </div>
+
+  <section id="musicPanel" class="music-panel" hidden aria-label="Original museum soundtrack">
+    <header class="music-panel-head">
+      <div class="music-disc"><span>UN</span><i></i></div>
+      <div>
+        <p class="eyebrow">PREMIUM ORIGINAL SOUNDTRACK</p>
+        <h3 id="musicTrackTitle">One Earth</h3>
+        <small id="musicTrackSubtitle">Cinematic orchestral opening</small>
+      </div>
+      <button id="musicClose" type="button" aria-label="Close music player">×</button>
+    </header>
+
+    <div id="musicVisualizer" class="music-visualizer" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+
+    <div class="music-progress-row">
+      <span id="musicCurrentTime">0:00</span>
+      <input id="musicProgress" type="range" min="0" max="1000" value="0" aria-label="Music progress">
+      <span id="musicDuration">0:00</span>
+    </div>
+
+    <div class="music-main-controls">
+      <button id="musicShuffle" type="button" aria-label="Toggle shuffle" title="Shuffle">⤨</button>
+      <button id="musicPrevious" type="button" aria-label="Previous track">‹</button>
+      <button id="musicPlay" class="music-play" type="button" aria-label="Play music">▶</button>
+      <button id="musicNext" type="button" aria-label="Next track">›</button>
+      <button id="musicRepeat" type="button" aria-label="Change repeat mode" title="Repeat all">↻</button>
+    </div>
+
+    <div id="musicTrackList" class="music-track-list"></div>
+
+    <div class="music-settings">
+      <label class="music-volume">
+        <span>🔈</span>
+        <input id="musicVolume" type="range" min="0" max="100" value="42" aria-label="Music volume">
+        <span>🔊</span>
+      </label>
+      <label class="music-auto-theme">
+        <input id="musicAutoTheme" type="checkbox">
+        <span><b>Automatic section themes</b><small>Change music as visitors explore the museum</small></span>
+      </label>
+      <div class="music-extra-controls">
+        <button id="musicMute" type="button"><span>🔊</span><b>Mute</b></button>
+        <label><span>Sleep timer</span>
+          <select id="musicSleep">
+            <option value="0">Off</option>
+            <option value="10">10 minutes</option>
+            <option value="20">20 minutes</option>
+            <option value="30">30 minutes</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <p class="music-credit">Six premium original instrumental tracks created for this school exhibition. No copyrighted commercial music is included.</p>
+    <audio id="museumAudio" preload="metadata"></audio>
+  </section>
+  <div id="musicBackdrop" class="music-backdrop" hidden></div>
+
+  <aside id="passportPanel" class="passport-panel" aria-hidden="true">
+    <button id="passportClose" class="passport-close" type="button" aria-label="Close passport">×</button>
+    <div class="passport-cover">
+      <span class="passport-emblem">UN</span>
+      <p>UNITED NATIONS ECOSYSTEM</p>
+      <h2>Museum Passport</h2>
+      <small>Tender Heart School • Exhibition 2026</small>
+    </div>
+
+    <div class="passport-progress-card">
+      <div class="passport-progress-head"><span>Museum progress</span><b id="passportCount">0 / 16 rooms</b></div>
+      <div class="passport-progress"><i id="passportProgress"></i></div>
+    </div>
+
+    <div>
+      <p class="eyebrow">ROOM STAMPS</p>
+      <div id="passportStamps" class="passport-stamps"></div>
+    </div>
+
+    <div>
+      <p class="eyebrow">ACHIEVEMENT BADGES</p>
+      <div id="passportBadges" class="passport-badges"></div>
+    </div>
+
+    <div class="passport-actions">
+      <button id="printPassport" class="button primary" type="button">Print Passport</button>
+      <button id="resetPassport" class="button glass" type="button">Reset Progress</button>
+    </div>
+  </aside>
+  <div id="passportBackdrop" class="passport-backdrop" hidden></div>
+
+  <section id="museumSearch" class="museum-search" hidden aria-label="Search the digital museum">
+    <div class="museum-search-dialog">
+      <div class="museum-search-head">
+        <span>⌕</span>
+        <input id="museumSearchInput" type="search" placeholder="Search organs, agencies, SDGs, cities, history..." autocomplete="off">
+        <button id="museumSearchClose" type="button" aria-label="Close search">×</button>
+      </div>
+      <div id="museumSearchSuggestions" class="museum-search-suggestions">
+        <button type="button" data-search-query="Security Council">Security Council</button>
+        <button type="button" data-search-query="UNICEF">UNICEF</button>
+        <button type="button" data-search-query="SDG 13">Climate Action</button>
+        <button type="button" data-search-query="India">India & the UN</button>
+        <button type="button" data-search-query="Country Explorer">Countries</button>
+      </div>
+      <div id="museumSearchResults" class="museum-search-results">
+        <div class="search-empty"><span>⌕</span><p>Start typing to search the museum.</p></div>
+      </div>
+      <div class="museum-search-foot"><span>Press <kbd>Esc</kbd> to close</span><span>Official profiles and museum rooms</span></div>
+    </div>
+      <div class="advanced-games">
+        <article class="flag-game-card reveal">
+          <div class="game-header"><div><p class="eyebrow">FLAG CHALLENGE</p><h3>Name the Member State</h3></div><strong id="flagScore">0</strong></div>
+          <div id="flagQuestion" class="flag-question">🌍</div>
+          <div id="flagChoices" class="flag-choices"></div>
+          <p id="flagFeedback" class="muted">Choose the correct country.</p>
+          <button id="nextFlag" class="button primary small" type="button">Next Flag</button>
+        </article>
+        <article class="myth-game-card reveal">
+          <div class="game-header"><div><p class="eyebrow">FACT OR MYTH</p><h3>Test UN Knowledge</h3></div><strong id="mythScore">0</strong></div>
+          <div id="mythStatement" class="myth-statement"></div>
+          <div class="myth-buttons">
+            <button id="mythFact" type="button">FACT</button>
+            <button id="mythMyth" type="button">MYTH</button>
+          </div>
+          <p id="mythExplanation" class="muted">Choose Fact or Myth.</p>
+          <button id="nextMyth" class="button primary small" type="button">Next Statement</button>
+        </article>
+        <article class="visitor-feedback-card reveal">
+          <p class="eyebrow">VISITOR FEEDBACK</p>
+          <h3>Rate the Digital Museum</h3>
+          <div id="feedbackStars" class="feedback-stars">
+            <button type="button" data-rating="1">★</button><button type="button" data-rating="2">★</button><button type="button" data-rating="3">★</button><button type="button" data-rating="4">★</button><button type="button" data-rating="5">★</button>
+          </div>
+          <textarea id="feedbackText" rows="5" placeholder="What did you enjoy or learn?"></textarea>
+          <button id="saveFeedback" class="button primary small" type="button">Save Feedback</button>
+          <p id="feedbackMessage" class="muted">Feedback is stored only on this device.</p>
+        </article>
+        <article class="teacher-report-card reveal">
+          <p class="eyebrow">TEACHER DASHBOARD</p>
+          <h3>Export Exhibition Results</h3>
+          <p>Download local visitor progress, badges and feedback as a CSV report.</p>
+          <div class="teacher-stat-grid">
+            <span><b id="teacherVisits">0</b><small>Rooms visited</small></span>
+            <span><b id="teacherBadges">0</b><small>Badges earned</small></span>
+            <span><b id="teacherFeedbackCount">0</b><small>Feedback entries</small></span>
+          </div>
+          <button id="exportTeacherReport" class="button primary small" type="button">Download CSV Report</button>
+        </article>
+      </div>
+
+  </section>
+
+  <aside id="accessPanel" class="utility-panel" hidden aria-label="Accessibility controls">
+    <div class="utility-heading"><div><p class="eyebrow">ACCESSIBILITY</p><h3>Display Controls</h3></div><button data-close-panel="accessPanel" type="button">×</button></div>
+    <label>Text size</label>
+    <div class="utility-buttons"><button id="textSmaller" type="button">A−</button><button id="textReset" type="button">A</button><button id="textLarger" type="button">A+</button></div>
+    <label class="toggle-row"><input id="contrastToggle" type="checkbox"><span>High-contrast mode</span></label>
+    <label class="toggle-row"><input id="motionToggle" type="checkbox"><span>Reduce animations</span></label>
+    <label class="toggle-row"><input id="focusToggle" type="checkbox"><span>Extra-visible keyboard focus</span></label>
+  </aside>
+
+  <aside id="controlPanel" class="utility-panel presenter-panel" hidden aria-label="Presenter dashboard">
+    <div class="utility-heading"><div><p class="eyebrow">PRESENTER DASHBOARD</p><h3>Exhibition Controls</h3></div><button data-close-panel="controlPanel" type="button">×</button></div>
+    <div class="presenter-grid">
+      <button id="dashboardPresent" type="button"><span>▶</span> Start presentation</button>
+      <button id="autoTourBtn" type="button"><span>⏱</span> Auto museum tour</button>
+      <button id="kioskBtn" type="button"><span>▣</span> Start kiosk mode</button>
+      <button id="dashboardReset" type="button"><span>↻</span> Reset activities</button>
+      <button id="dashboardQR" type="button"><span>▦</span> Show UN QR</button>
+      <button id="dashboardInstall" type="button"><span>⇩</span> Install app</button>
+    </div>
+    <label for="idleMinutes">Kiosk return-to-home time</label>
+    <select id="idleMinutes"><option value="1">1 minute</option><option value="2" selected>2 minutes</option><option value="5">5 minutes</option></select>
+    <p id="kioskStatus" class="utility-note">Kiosk mode is off.</p>
+  </aside>
+
+  <div id="utilityBackdrop" class="utility-backdrop" hidden></div>
+  <div id="kioskBadge" class="kiosk-badge" hidden><i></i> KIOSK MODE <button id="exitKioskBtn" type="button">Exit</button></div>
+
+  <nav id="mobileNav" class="mobile-nav" aria-label="Mobile navigation">
+    <a href="#home" data-mobile-section="home"><span>⌂</span><small>Home</small></a>
+    <button id="mobileExploreBtn" type="button" aria-label="Explore museum rooms"><span>◎</span><small>Explore</small></button>
+    <a href="#map" data-mobile-section="map"><span>🗺</span><small>Map</small></a>
+    <a href="#simulators" data-mobile-section="simulators"><span>⚖</span><small>Voting</small></a>
+    <button id="mobileAiBtn" type="button" aria-label="Open UN AI Guide"><span>AI</span><small>Ask</small></button>
+  </nav>
+
+  <button id="aiLauncher" class="ai-launcher" type="button" aria-label="Open UN AI Guide" aria-expanded="false">
+    <span class="ai-launcher-orbit"></span>
+    <b>AI</b>
+    <span>Ask UN Guide</span>
+  </button>
+
+  <section id="aiPanel" class="ai-panel" aria-label="UN AI Guide" aria-hidden="true">
+    <header class="ai-header">
+      <div class="ai-avatar"><span>UN</span><i></i></div>
+      <div class="ai-heading">
+        <strong>UN AI Guide</strong>
+        <small><i></i> Smart offline assistant</small>
+      </div>
+      <div class="ai-header-actions">
+        <button id="aiSpeakBtn" type="button" title="Read the last answer aloud" aria-label="Read the last answer aloud">🔊</button>
+        <button id="aiClearBtn" type="button" title="Clear conversation" aria-label="Clear conversation">↻</button>
+        <button id="aiCloseBtn" type="button" title="Close chatbot" aria-label="Close chatbot">×</button>
+      </div>
+    </header>
+
+    <div class="ai-privacy">
+      <span>🔒</span>
+      <p><b>Private and exhibition-safe:</b> questions are answered inside this browser.</p>
+    </div>
+
+    <div id="aiMessages" class="ai-messages" aria-live="polite">
+      <div class="ai-message ai-bot-message">
+        <div class="ai-message-avatar">UN</div>
+        <div class="ai-bubble">
+          <p>Hello! I am your UN AI Guide. Ask me about any UN organ, agency, peacekeeping mission, SDG, headquarters or veto power.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="aiSuggestions" class="ai-suggestions">
+      <button type="button">What is the UN?</button>
+      <button type="button">Explain veto power</button>
+      <button type="button">What does UNICEF do?</button>
+      <button type="button">Show the SDGs</button>
+    </div>
+
+    <form id="aiForm" class="ai-form">
+      <button id="aiMicBtn" class="ai-mic" type="button" title="Voice input" aria-label="Voice input">🎙</button>
+      <input id="aiInput" type="text" placeholder="Ask a question about the UN..." autocomplete="off" maxlength="300" aria-label="Ask the UN AI Guide">
+      <button class="ai-send" type="submit" aria-label="Send question">➤</button>
+    </form>
+
+    <div class="ai-footer-note">
+      <span id="aiTopicLabel">Ready to help</span>
+      <span>•</span>
+      <span>Official links included</span>
+    </div>
+  </section>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button id="modalClose" class="modal-close" type="button" aria-label="Close">×</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <div id="tourCard" class="tour-card" hidden>
+    <button id="tourClose" type="button" aria-label="Close tour">×</button>
+    <p id="tourCount" class="eyebrow"></p>
+    <h2 id="tourTitle"></h2>
+    <p id="tourText"></p>
+    <div><button id="tourPrev" class="button glass small" type="button">Previous</button><button id="tourNext" class="button primary small" type="button">Next</button></div>
+  </div>
+
+  <div id="presentationControls" class="presentation-controls" hidden>
+    <button id="presentPrev" type="button">←</button><span id="presentLabel">1 / 10</span><button id="presentNext" type="button">→</button><button id="presentExit" type="button">Exit</button>
+  </div>
+  <div id="celebrationLayer" class="celebration-layer" aria-hidden="true"></div>
+  <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top">↑</button>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+
+  <script>
+  (function () {
+    function releaseMuseumLoader() {
+      var loader = document.getElementById("loader");
+      if (loader) {
+        loader.classList.add("hidden");
+        loader.setAttribute("aria-hidden", "true");
+      }
+      if (document.body) document.body.classList.remove("no-scroll");
+    }
+    function prepareLoaderSafety() {
+      var skip = document.getElementById("skipLoader");
+      if (skip) skip.addEventListener("click", releaseMuseumLoader);
+      window.setTimeout(releaseMuseumLoader, 2600);
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", prepareLoaderSafety, { once: true });
+    } else {
+      prepareLoaderSafety();
+    }
+    window.addEventListener("error", function () {
+      window.setTimeout(releaseMuseumLoader, 100);
+    });
+    window.addEventListener("unhandledrejection", function () {
+      window.setTimeout(releaseMuseumLoader, 100);
+    });
+  })();
+  </script>
+
+  <script>window.UN_COUNTRIES = [{"name": "Afghanistan", "code": "AF", "flag": "🇦🇫", "region": "Asia"}, {"name": "Albania", "code": "AL", "flag": "🇦🇱", "region": "Europe"}, {"name": "Algeria", "code": "DZ", "flag": "🇩🇿", "region": "Africa"}, {"name": "Andorra", "code": "AD", "flag": "🇦🇩", "region": "Europe"}, {"name": "Angola", "code": "AO", "flag": "🇦🇴", "region": "Africa"}, {"name": "Antigua and Barbuda", "code": "AG", "flag": "🇦🇬", "region": "Americas"}, {"name": "Argentina", "code": "AR", "flag": "🇦🇷", "region": "Americas"}, {"name": "Armenia", "code": "AM", "flag": "🇦🇲", "region": "Europe"}, {"name": "Australia", "code": "AU", "flag": "🇦🇺", "region": "Oceania"}, {"name": "Austria", "code": "AT", "flag": "🇦🇹", "region": "Europe"}, {"name": "Azerbaijan", "code": "AZ", "flag": "🇦🇿", "region": "Europe"}, {"name": "Bahamas", "code": "BS", "flag": "🇧🇸", "region": "Americas"}, {"name": "Bahrain", "code": "BH", "flag": "🇧🇭", "region": "Asia"}, {"name": "Bangladesh", "code": "BD", "flag": "🇧🇩", "region": "Asia"}, {"name": "Barbados", "code": "BB", "flag": "🇧🇧", "region": "Americas"}, {"name": "Belarus", "code": "BY", "flag": "🇧🇾", "region": "Europe"}, {"name": "Belgium", "code": "BE", "flag": "🇧🇪", "region": "Europe"}, {"name": "Belize", "code": "BZ", "flag": "🇧🇿", "region": "Americas"}, {"name": "Benin", "code": "BJ", "flag": "🇧🇯", "region": "Africa"}, {"name": "Bhutan", "code": "BT", "flag": "🇧🇹", "region": "Asia"}, {"name": "Bolivia", "code": "BO", "flag": "🇧🇴", "region": "Americas"}, {"name": "Bosnia and Herzegovina", "code": "BA", "flag": "🇧🇦", "region": "Europe"}, {"name": "Botswana", "code": "BW", "flag": "🇧🇼", "region": "Africa"}, {"name": "Brazil", "code": "BR", "flag": "🇧🇷", "region": "Americas"}, {"name": "Brunei Darussalam", "code": "UN", "flag": "🇺🇳", "region": "Asia"}, {"name": "Bulgaria", "code": "BG", "flag": "🇧🇬", "region": "Europe"}, {"name": "Burkina Faso", "code": "BF", "flag": "🇧🇫", "region": "Africa"}, {"name": "Burundi", "code": "BI", "flag": "🇧🇮", "region": "Africa"}, {"name": "Cabo Verde", "code": "UN", "flag": "🇺🇳", "region": "Africa"}, {"name": "Cambodia", "code": "KH", "flag": "🇰🇭", "region": "Asia"}, {"name": "Cameroon", "code": "CM", "flag": "🇨🇲", "region": "Africa"}, {"name": "Canada", "code": "CA", "flag": "🇨🇦", "region": "Americas"}, {"name": "Central African Republic", "code": "CF", "flag": "🇨🇫", "region": "Africa"}, {"name": "Chad", "code": "TD", "flag": "🇹🇩", "region": "Africa"}, {"name": "Chile", "code": "CL", "flag": "🇨🇱", "region": "Americas"}, {"name": "China", "code": "CN", "flag": "🇨🇳", "region": "Asia"}, {"name": "Colombia", "code": "CO", "flag": "🇨🇴", "region": "Americas"}, {"name": "Comoros", "code": "KM", "flag": "🇰🇲", "region": "Africa"}, {"name": "Congo", "code": "CG", "flag": "🇨🇬", "region": "Africa"}, {"name": "Costa Rica", "code": "CR", "flag": "🇨🇷", "region": "Americas"}, {"name": "Côte d'Ivoire", "code": "CI", "flag": "🇨🇮", "region": "Africa"}, {"name": "Croatia", "code": "HR", "flag": "🇭🇷", "region": "Europe"}, {"name": "Cuba", "code": "CU", "flag": "🇨🇺", "region": "Americas"}, {"name": "Cyprus", "code": "CY", "flag": "🇨🇾", "region": "Europe"}, {"name": "Czechia", "code": "CZ", "flag": "🇨🇿", "region": "Europe"}, {"name": "Democratic People's Republic of Korea", "code": "KP", "flag": "🇰🇵", "region": "Asia"}, {"name": "Democratic Republic of the Congo", "code": "CD", "flag": "🇨🇩", "region": "Africa"}, {"name": "Denmark", "code": "DK", "flag": "🇩🇰", "region": "Europe"}, {"name": "Djibouti", "code": "DJ", "flag": "🇩🇯", "region": "Africa"}, {"name": "Dominica", "code": "DM", "flag": "🇩🇲", "region": "Americas"}, {"name": "Dominican Republic", "code": "DO", "flag": "🇩🇴", "region": "Americas"}, {"name": "Ecuador", "code": "EC", "flag": "🇪🇨", "region": "Americas"}, {"name": "Egypt", "code": "EG", "flag": "🇪🇬", "region": "Africa"}, {"name": "El Salvador", "code": "SV", "flag": "🇸🇻", "region": "Americas"}, {"name": "Equatorial Guinea", "code": "GQ", "flag": "🇬🇶", "region": "Africa"}, {"name": "Eritrea", "code": "ER", "flag": "🇪🇷", "region": "Africa"}, {"name": "Estonia", "code": "EE", "flag": "🇪🇪", "region": "Europe"}, {"name": "Eswatini", "code": "SZ", "flag": "🇸🇿", "region": "Africa"}, {"name": "Ethiopia", "code": "ET", "flag": "🇪🇹", "region": "Africa"}, {"name": "Fiji", "code": "FJ", "flag": "🇫🇯", "region": "Oceania"}, {"name": "Finland", "code": "FI", "flag": "🇫🇮", "region": "Europe"}, {"name": "France", "code": "FR", "flag": "🇫🇷", "region": "Europe"}, {"name": "Gabon", "code": "GA", "flag": "🇬🇦", "region": "Africa"}, {"name": "Gambia", "code": "GM", "flag": "🇬🇲", "region": "Africa"}, {"name": "Georgia", "code": "GE", "flag": "🇬🇪", "region": "Europe"}, {"name": "Germany", "code": "DE", "flag": "🇩🇪", "region": "Europe"}, {"name": "Ghana", "code": "GH", "flag": "🇬🇭", "region": "Africa"}, {"name": "Greece", "code": "GR", "flag": "🇬🇷", "region": "Europe"}, {"name": "Grenada", "code": "GD", "flag": "🇬🇩", "region": "Americas"}, {"name": "Guatemala", "code": "GT", "flag": "🇬🇹", "region": "Americas"}, {"name": "Guinea", "code": "GN", "flag": "🇬🇳", "region": "Africa"}, {"name": "Guinea-Bissau", "code": "GW", "flag": "🇬🇼", "region": "Africa"}, {"name": "Guyana", "code": "GY", "flag": "🇬🇾", "region": "Americas"}, {"name": "Haiti", "code": "HT", "flag": "🇭🇹", "region": "Americas"}, {"name": "Honduras", "code": "HN", "flag": "🇭🇳", "region": "Americas"}, {"name": "Hungary", "code": "HU", "flag": "🇭🇺", "region": "Europe"}, {"name": "Iceland", "code": "IS", "flag": "🇮🇸", "region": "Europe"}, {"name": "India", "code": "IN", "flag": "🇮🇳", "region": "Asia"}, {"name": "Indonesia", "code": "ID", "flag": "🇮🇩", "region": "Asia"}, {"name": "Iran", "code": "IR", "flag": "🇮🇷", "region": "Asia"}, {"name": "Iraq", "code": "IQ", "flag": "🇮🇶", "region": "Asia"}, {"name": "Ireland", "code": "IE", "flag": "🇮🇪", "region": "Europe"}, {"name": "Israel", "code": "IL", "flag": "🇮🇱", "region": "Asia"}, {"name": "Italy", "code": "IT", "flag": "🇮🇹", "region": "Europe"}, {"name": "Jamaica", "code": "JM", "flag": "🇯🇲", "region": "Americas"}, {"name": "Japan", "code": "JP", "flag": "🇯🇵", "region": "Asia"}, {"name": "Jordan", "code": "JO", "flag": "🇯🇴", "region": "Asia"}, {"name": "Kazakhstan", "code": "KZ", "flag": "🇰🇿", "region": "Asia"}, {"name": "Kenya", "code": "KE", "flag": "🇰🇪", "region": "Africa"}, {"name": "Kiribati", "code": "KI", "flag": "🇰🇮", "region": "Oceania"}, {"name": "Kuwait", "code": "KW", "flag": "🇰🇼", "region": "Asia"}, {"name": "Kyrgyzstan", "code": "KG", "flag": "🇰🇬", "region": "Asia"}, {"name": "Lao People's Democratic Republic", "code": "LA", "flag": "🇱🇦", "region": "Asia"}, {"name": "Latvia", "code": "LV", "flag": "🇱🇻", "region": "Europe"}, {"name": "Lebanon", "code": "LB", "flag": "🇱🇧", "region": "Asia"}, {"name": "Lesotho", "code": "LS", "flag": "🇱🇸", "region": "Africa"}, {"name": "Liberia", "code": "LR", "flag": "🇱🇷", "region": "Africa"}, {"name": "Libya", "code": "LY", "flag": "🇱🇾", "region": "Africa"}, {"name": "Liechtenstein", "code": "LI", "flag": "🇱🇮", "region": "Europe"}, {"name": "Lithuania", "code": "LT", "flag": "🇱🇹", "region": "Europe"}, {"name": "Luxembourg", "code": "LU", "flag": "🇱🇺", "region": "Europe"}, {"name": "Madagascar", "code": "MG", "flag": "🇲🇬", "region": "Africa"}, {"name": "Malawi", "code": "MW", "flag": "🇲🇼", "region": "Africa"}, {"name": "Malaysia", "code": "MY", "flag": "🇲🇾", "region": "Asia"}, {"name": "Maldives", "code": "MV", "flag": "🇲🇻", "region": "Asia"}, {"name": "Mali", "code": "ML", "flag": "🇲🇱", "region": "Africa"}, {"name": "Malta", "code": "MT", "flag": "🇲🇹", "region": "Europe"}, {"name": "Marshall Islands", "code": "MH", "flag": "🇲🇭", "region": "Oceania"}, {"name": "Mauritania", "code": "MR", "flag": "🇲🇷", "region": "Africa"}, {"name": "Mauritius", "code": "MU", "flag": "🇲🇺", "region": "Africa"}, {"name": "Mexico", "code": "MX", "flag": "🇲🇽", "region": "Americas"}, {"name": "Micronesia", "code": "FM", "flag": "🇫🇲", "region": "Oceania"}, {"name": "Monaco", "code": "MC", "flag": "🇲🇨", "region": "Europe"}, {"name": "Mongolia", "code": "MN", "flag": "🇲🇳", "region": "Asia"}, {"name": "Montenegro", "code": "ME", "flag": "🇲🇪", "region": "Europe"}, {"name": "Morocco", "code": "MA", "flag": "🇲🇦", "region": "Africa"}, {"name": "Mozambique", "code": "MZ", "flag": "🇲🇿", "region": "Africa"}, {"name": "Myanmar", "code": "MM", "flag": "🇲🇲", "region": "Asia"}, {"name": "Namibia", "code": "NA", "flag": "🇳🇦", "region": "Africa"}, {"name": "Nauru", "code": "NR", "flag": "🇳🇷", "region": "Oceania"}, {"name": "Nepal", "code": "NP", "flag": "🇳🇵", "region": "Asia"}, {"name": "Netherlands", "code": "NL", "flag": "🇳🇱", "region": "Europe"}, {"name": "New Zealand", "code": "NZ", "flag": "🇳🇿", "region": "Oceania"}, {"name": "Nicaragua", "code": "NI", "flag": "🇳🇮", "region": "Americas"}, {"name": "Niger", "code": "NE", "flag": "🇳🇪", "region": "Africa"}, {"name": "Nigeria", "code": "NG", "flag": "🇳🇬", "region": "Africa"}, {"name": "North Macedonia", "code": "MK", "flag": "🇲🇰", "region": "Europe"}, {"name": "Norway", "code": "NO", "flag": "🇳🇴", "region": "Europe"}, {"name": "Oman", "code": "OM", "flag": "🇴🇲", "region": "Asia"}, {"name": "Pakistan", "code": "PK", "flag": "🇵🇰", "region": "Asia"}, {"name": "Palau", "code": "PW", "flag": "🇵🇼", "region": "Oceania"}, {"name": "Panama", "code": "PA", "flag": "🇵🇦", "region": "Americas"}, {"name": "Papua New Guinea", "code": "PG", "flag": "🇵🇬", "region": "Oceania"}, {"name": "Paraguay", "code": "PY", "flag": "🇵🇾", "region": "Americas"}, {"name": "Peru", "code": "PE", "flag": "🇵🇪", "region": "Americas"}, {"name": "Philippines", "code": "PH", "flag": "🇵🇭", "region": "Asia"}, {"name": "Poland", "code": "PL", "flag": "🇵🇱", "region": "Europe"}, {"name": "Portugal", "code": "PT", "flag": "🇵🇹", "region": "Europe"}, {"name": "Qatar", "code": "QA", "flag": "🇶🇦", "region": "Asia"}, {"name": "Republic of Korea", "code": "KR", "flag": "🇰🇷", "region": "Asia"}, {"name": "Republic of Moldova", "code": "MD", "flag": "🇲🇩", "region": "Europe"}, {"name": "Romania", "code": "RO", "flag": "🇷🇴", "region": "Europe"}, {"name": "Russian Federation", "code": "RU", "flag": "🇷🇺", "region": "Europe"}, {"name": "Rwanda", "code": "RW", "flag": "🇷🇼", "region": "Africa"}, {"name": "Saint Kitts and Nevis", "code": "KN", "flag": "🇰🇳", "region": "Americas"}, {"name": "Saint Lucia", "code": "LC", "flag": "🇱🇨", "region": "Americas"}, {"name": "Saint Vincent and the Grenadines", "code": "VC", "flag": "🇻🇨", "region": "Americas"}, {"name": "Samoa", "code": "WS", "flag": "🇼🇸", "region": "Oceania"}, {"name": "San Marino", "code": "SM", "flag": "🇸🇲", "region": "Europe"}, {"name": "Sao Tome and Principe", "code": "ST", "flag": "🇸🇹", "region": "Africa"}, {"name": "Saudi Arabia", "code": "SA", "flag": "🇸🇦", "region": "Asia"}, {"name": "Senegal", "code": "SN", "flag": "🇸🇳", "region": "Africa"}, {"name": "Serbia", "code": "RS", "flag": "🇷🇸", "region": "Europe"}, {"name": "Seychelles", "code": "SC", "flag": "🇸🇨", "region": "Africa"}, {"name": "Sierra Leone", "code": "SL", "flag": "🇸🇱", "region": "Africa"}, {"name": "Singapore", "code": "SG", "flag": "🇸🇬", "region": "Asia"}, {"name": "Slovakia", "code": "SK", "flag": "🇸🇰", "region": "Europe"}, {"name": "Slovenia", "code": "SI", "flag": "🇸🇮", "region": "Europe"}, {"name": "Solomon Islands", "code": "SB", "flag": "🇸🇧", "region": "Oceania"}, {"name": "Somalia", "code": "SO", "flag": "🇸🇴", "region": "Africa"}, {"name": "South Africa", "code": "ZA", "flag": "🇿🇦", "region": "Africa"}, {"name": "South Sudan", "code": "SS", "flag": "🇸🇸", "region": "Africa"}, {"name": "Spain", "code": "ES", "flag": "🇪🇸", "region": "Europe"}, {"name": "Sri Lanka", "code": "LK", "flag": "🇱🇰", "region": "Asia"}, {"name": "Sudan", "code": "SD", "flag": "🇸🇩", "region": "Africa"}, {"name": "Suriname", "code": "SR", "flag": "🇸🇷", "region": "Americas"}, {"name": "Sweden", "code": "SE", "flag": "🇸🇪", "region": "Europe"}, {"name": "Switzerland", "code": "CH", "flag": "🇨🇭", "region": "Europe"}, {"name": "Syrian Arab Republic", "code": "SY", "flag": "🇸🇾", "region": "Asia"}, {"name": "Tajikistan", "code": "TJ", "flag": "🇹🇯", "region": "Asia"}, {"name": "Thailand", "code": "TH", "flag": "🇹🇭", "region": "Asia"}, {"name": "Timor-Leste", "code": "TL", "flag": "🇹🇱", "region": "Asia"}, {"name": "Togo", "code": "TG", "flag": "🇹🇬", "region": "Africa"}, {"name": "Tonga", "code": "TO", "flag": "🇹🇴", "region": "Oceania"}, {"name": "Trinidad and Tobago", "code": "TT", "flag": "🇹🇹", "region": "Americas"}, {"name": "Tunisia", "code": "TN", "flag": "🇹🇳", "region": "Africa"}, {"name": "Türkiye", "code": "TR", "flag": "🇹🇷", "region": "Europe"}, {"name": "Turkmenistan", "code": "TM", "flag": "🇹🇲", "region": "Asia"}, {"name": "Tuvalu", "code": "TV", "flag": "🇹🇻", "region": "Oceania"}, {"name": "Uganda", "code": "UG", "flag": "🇺🇬", "region": "Africa"}, {"name": "Ukraine", "code": "UA", "flag": "🇺🇦", "region": "Europe"}, {"name": "United Arab Emirates", "code": "AE", "flag": "🇦🇪", "region": "Asia"}, {"name": "United Kingdom", "code": "GB", "flag": "🇬🇧", "region": "Europe"}, {"name": "United Republic of Tanzania", "code": "TZ", "flag": "🇹🇿", "region": "Africa"}, {"name": "United States", "code": "US", "flag": "🇺🇸", "region": "Americas"}, {"name": "Uruguay", "code": "UY", "flag": "🇺🇾", "region": "Americas"}, {"name": "Uzbekistan", "code": "UZ", "flag": "🇺🇿", "region": "Asia"}, {"name": "Vanuatu", "code": "VU", "flag": "🇻🇺", "region": "Oceania"}, {"name": "Venezuela", "code": "VE", "flag": "🇻🇪", "region": "Americas"}, {"name": "Viet Nam", "code": "VN", "flag": "🇻🇳", "region": "Asia"}, {"name": "Yemen", "code": "YE", "flag": "🇾🇪", "region": "Asia"}, {"name": "Zambia", "code": "ZM", "flag": "🇿🇲", "region": "Africa"}, {"name": "Zimbabwe", "code": "ZW", "flag": "🇿🇼", "region": "Africa"}];window.SITE_DATA = {"agencies": [{"id": "un", "name": "United Nations", "short": "UN", "year": "1945", "hq": "New York, USA", "leader": "Secretary-General: António Guterres", "category": "Core System", "icon": "🌐", "url": "https://www.un.org/", "functions": ["Maintains international peace and security", "Promotes human rights", "Coordinates humanitarian and development work"], "achievement": "Created a universal forum where 193 Member States can cooperate.", "project": "Global action on peace, climate, development and humanitarian emergencies."}, {"id": "ga", "name": "General Assembly", "short": "UNGA", "year": "1945", "hq": "New York, USA", "leader": "See the official website for current leadership details", "category": "Principal Organ", "icon": "🏛️", "url": "https://www.un.org/en/ga/", "functions": ["Universal deliberative forum", "Approves the UN budget", "Elects members to UN bodies"], "achievement": "Gives every UN Member State one vote.", "project": "Annual sessions, high-level debates and global resolutions."}, {"id": "sc", "name": "Security Council", "short": "UNSC", "year": "1945", "hq": "New York, USA", "leader": "See the official website for current leadership details", "category": "Principal Organ", "icon": "🛡️", "url": "https://www.un.org/securitycouncil/", "functions": ["Maintains peace and security", "Creates peacekeeping mandates", "May impose sanctions"], "achievement": "Can adopt binding decisions under the UN Charter.", "project": "Responding to conflicts and threats to international peace."}, {"id": "ecosoc", "name": "Economic and Social Council", "short": "ECOSOC", "year": "1945", "hq": "New York, USA", "leader": "See the official website for current leadership details", "category": "Principal Organ", "icon": "🤝", "url": "https://ecosoc.un.org/", "functions": ["Coordinates economic and social work", "Connects governments and civil society", "Reviews sustainable development"], "achievement": "Links the UN development system with Member States and NGOs.", "project": "High-level political forum and development coordination."}, {"id": "icj", "name": "International Court of Justice", "short": "ICJ", "year": "1945", "hq": "The Hague, Netherlands", "leader": "See the official website for current leadership details", "category": "Principal Organ", "icon": "⚖️", "url": "https://www.icj-cij.org/", "functions": ["Settles legal disputes between states", "Gives advisory opinions", "Interprets international law"], "achievement": "Serves as the principal judicial organ of the UN.", "project": "Peaceful settlement of international legal disputes."}, {"id": "secretariat", "name": "UN Secretariat", "short": "Secretariat", "year": "1945", "hq": "New York and worldwide", "leader": "See the official website for current leadership details", "category": "Principal Organ", "icon": "🏢", "url": "https://www.un.org/en/about-us/secretariat", "functions": ["Carries out daily UN work", "Prepares studies and reports", "Supports meetings and missions"], "achievement": "Turns decisions of Member States into coordinated action.", "project": "Administration, diplomacy, research and field support."}, {"id": "trusteeship", "name": "Trusteeship Council", "short": "Trusteeship", "year": "1945", "hq": "New York, USA", "leader": "See the official website for current leadership details", "category": "Principal Organ", "icon": "🕊️", "url": "https://www.un.org/en/about-us/trusteeship-council", "functions": ["Supervised trust territories", "Supported self-government", "Advanced decolonization"], "achievement": "All trust territories achieved self-government or independence.", "project": "Operations are suspended; meetings may be held when required."}, {"id": "who", "name": "World Health Organization", "short": "WHO", "year": "1948", "hq": "Geneva, Switzerland", "leader": "Director-General: Dr Tedros Adhanom Ghebreyesus", "category": "Health", "icon": "🏥", "url": "https://www.who.int/", "functions": ["Coordinates global health", "Sets health standards", "Supports outbreak response"], "achievement": "Led international action against major diseases and health emergencies.", "project": "Universal health coverage, emergency preparedness and disease control."}, {"id": "unicef", "name": "UNICEF", "short": "UNICEF", "year": "1946", "hq": "New York, USA", "leader": "See the official website for current leadership details", "category": "Humanitarian", "icon": "👶", "url": "https://www.unicef.org/", "functions": ["Protects children's rights", "Supports nutrition and vaccination", "Provides education and clean water"], "achievement": "Works for children in more than 190 countries and territories.", "project": "Child protection, education, health, water and emergency relief."}, {"id": "unesco", "name": "UNESCO", "short": "UNESCO", "year": "1945", "hq": "Paris, France", "leader": "Director-General: Khaled El-Enany", "category": "Education & Culture", "icon": "📚", "url": "https://www.unesco.org/", "functions": ["Promotes education", "Protects cultural heritage", "Supports science and free information"], "achievement": "Created the World Heritage system.", "project": "Education transformation, heritage protection and ethical science."}, {"id": "fao", "name": "Food and Agriculture Organization", "short": "FAO", "year": "1945", "hq": "Rome, Italy", "leader": "See the official website for current leadership details", "category": "Food", "icon": "🌾", "url": "https://www.fao.org/", "functions": ["Fights hunger", "Improves agriculture", "Provides food and farming data"], "achievement": "Supports countries in food security and sustainable farming.", "project": "Climate-smart agriculture, food systems and rural development."}, {"id": "undp", "name": "United Nations Development Programme", "short": "UNDP", "year": "1965", "hq": "New York, USA", "leader": "See the official website for current leadership details", "category": "Development", "icon": "📈", "url": "https://www.undp.org/", "functions": ["Reduces poverty", "Strengthens governance", "Supports climate resilience"], "achievement": "Works in countries and territories across the world.", "project": "Development finance, digital transformation and crisis recovery."}, {"id": "unep", "name": "United Nations Environment Programme", "short": "UNEP", "year": "1972", "hq": "Nairobi, Kenya", "leader": "See the official website for current leadership details", "category": "Environment", "icon": "🌿", "url": "https://www.unep.org/", "functions": ["Leads environmental action", "Supports climate cooperation", "Protects nature and ecosystems"], "achievement": "Helped build major global environmental agreements.", "project": "Climate, biodiversity, pollution and sustainable consumption."}, {"id": "unhcr", "name": "UN Refugee Agency", "short": "UNHCR", "year": "1950", "hq": "Geneva, Switzerland", "leader": "See the official website for current leadership details", "category": "Humanitarian", "icon": "🏕️", "url": "https://www.unhcr.org/", "functions": ["Protects refugees", "Provides shelter and legal support", "Finds long-term solutions"], "achievement": "Has assisted displaced people for generations.", "project": "Emergency protection, resettlement and support for host communities."}, {"id": "wfp", "name": "World Food Programme", "short": "WFP", "year": "1961", "hq": "Rome, Italy", "leader": "See the official website for current leadership details", "category": "Humanitarian", "icon": "🍞", "url": "https://www.wfp.org/", "functions": ["Delivers emergency food", "Supports school meals", "Uses logistics in crises"], "achievement": "Received the 2020 Nobel Peace Prize.", "project": "Emergency food relief, nutrition and resilience."}, {"id": "unwomen", "name": "UN Women", "short": "UN Women", "year": "2010", "hq": "New York, USA", "leader": "See the official website for current leadership details", "category": "Human Rights", "icon": "👩", "url": "https://www.unwomen.org/", "functions": ["Promotes gender equality", "Supports women's leadership", "Works to end violence"], "achievement": "Created a unified UN entity for gender equality.", "project": "Leadership, economic empowerment and safety."}, {"id": "unhabitat", "name": "UN-Habitat", "short": "UN-Habitat", "year": "1978", "hq": "Nairobi, Kenya", "leader": "See the official website for current leadership details", "category": "Development", "icon": "🏙️", "url": "https://unhabitat.org/", "functions": ["Promotes sustainable cities", "Supports housing", "Improves urban planning"], "achievement": "Leads the UN system's work on human settlements.", "project": "Inclusive cities, housing and urban resilience."}, {"id": "worldbank", "name": "World Bank Group", "short": "World Bank", "year": "1944", "hq": "Washington, D.C., USA", "leader": "See the official website for current leadership details", "category": "Finance", "icon": "🏦", "url": "https://www.worldbank.org/", "functions": ["Finances development", "Supports poverty reduction", "Provides research and advice"], "achievement": "Funds infrastructure, education, health and development programmes.", "project": "Development finance and shared prosperity."}, {"id": "imf", "name": "International Monetary Fund", "short": "IMF", "year": "1944", "hq": "Washington, D.C., USA", "leader": "See the official website for current leadership details", "category": "Finance", "icon": "💹", "url": "https://www.imf.org/", "functions": ["Promotes financial stability", "Provides policy advice", "Offers financial assistance"], "achievement": "Supports international monetary cooperation.", "project": "Economic monitoring, lending and capacity development."}], "sdgs": [["No Poverty", "#e5243b", "End poverty in all its forms everywhere.", "Social protection and livelihoods."], ["Zero Hunger", "#dda63a", "End hunger and improve nutrition.", "Food security and sustainable farming."], ["Good Health", "#4c9f38", "Ensure healthy lives for all.", "Healthcare, vaccination and well-being."], ["Quality Education", "#c5192d", "Ensure inclusive quality education.", "Schools, skills and lifelong learning."], ["Gender Equality", "#ff3a21", "Achieve equality for women and girls.", "Rights, safety and leadership."], ["Clean Water", "#26bde2", "Ensure water and sanitation for all.", "Safe drinking water and hygiene."], ["Clean Energy", "#fcc30b", "Ensure affordable sustainable energy.", "Renewables and energy access."], ["Decent Work", "#a21942", "Promote decent work and growth.", "Jobs, skills and worker protection."], ["Industry & Innovation", "#fd6925", "Build resilient infrastructure.", "Technology, transport and innovation."], ["Reduced Inequalities", "#dd1367", "Reduce inequality within and among countries.", "Inclusion and fair opportunity."], ["Sustainable Cities", "#fd9d24", "Make cities inclusive and resilient.", "Housing, transport and public spaces."], ["Responsible Consumption", "#bf8b2e", "Use resources responsibly.", "Waste reduction and circular economy."], ["Climate Action", "#3f7e44", "Take urgent climate action.", "Adaptation, mitigation and education."], ["Life Below Water", "#0a97d9", "Protect oceans and marine resources.", "Clean seas and sustainable fisheries."], ["Life on Land", "#56c02b", "Protect forests and biodiversity.", "Ecosystems and land restoration."], ["Peace & Justice", "#00689d", "Build peaceful and accountable societies.", "Justice, rights and strong institutions."], ["Partnerships", "#19486a", "Strengthen global partnerships.", "Finance, technology and cooperation."]], "missions": [{"code": "MINURSO", "place": "Western Sahara", "focus": "Ceasefire monitoring and support for a political process."}, {"code": "MINUSCA", "place": "Central African Republic", "focus": "Civilian protection and support for stability."}, {"code": "MONUSCO", "place": "Democratic Republic of the Congo", "focus": "Civilian protection and institutional support."}, {"code": "UNDOF", "place": "Golan", "focus": "Observing disengagement and maintaining the ceasefire."}, {"code": "UNFICYP", "place": "Cyprus", "focus": "Preventing renewed fighting and supporting dialogue."}, {"code": "UNIFIL", "place": "Lebanon", "focus": "Monitoring cessation of hostilities and supporting stability."}, {"code": "UNISFA", "place": "Abyei", "focus": "Security monitoring and protection in the Abyei area."}, {"code": "UNMIK", "place": "Kosovo", "focus": "Supporting peace, security and respect for human rights."}, {"code": "UNMISS", "place": "South Sudan", "focus": "Protecting civilians and supporting durable peace."}, {"code": "UNMOGIP", "place": "India and Pakistan", "focus": "Observing developments relating to the ceasefire."}, {"code": "UNTSO", "place": "Middle East", "focus": "Military observation and support for ceasefire arrangements."}], "verified": "14 July 2026"};</script>
+  <script src="script.js?v=10.4"></script>
+</body>
+</html>
