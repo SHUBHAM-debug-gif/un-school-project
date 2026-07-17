@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="description" content="Interactive United Nations Ecosystem digital museum for a school exhibition">
   <meta name="theme-color" content="#031225">
-  <title>United Nations Ecosystem — V10.5 Mobile Friendly Edition</title>
+  <title>United Nations Ecosystem — V10.5 Mobile Layout Fixed</title>
   <style id="critical-hidden-fix">[hidden]{display:none!important}.modal[hidden],.tour-card[hidden],.presentation-controls[hidden],.drawer-backdrop[hidden],.sim-panel[hidden],#runtimeError[hidden]{display:none!important}</style>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
@@ -77,6 +77,7 @@
       <a href="#simulators" data-en="Simulators" data-hi="सिमुलेटर">Simulators</a>
       <a href="#learning" data-en="Learning Lab" data-hi="अध्ययन प्रयोगशाला">Learning Lab</a>
       <div class="mobile-menu-tools" aria-label="Website tools">
+        <button type="button" data-proxy-click="soundBtn" class="mobile-menu-music"><span>♫</span><b>Music Player</b></button>
         <button type="button" data-proxy-click="museumSearchBtn"><span>⌕</span><b>Search Museum</b></button>
         <button type="button" data-proxy-click="passportBtn"><span>◉</span><b>My Passport</b></button>
         <button type="button" data-proxy-click="narrationBtn"><span>🔊</span><b>Narrate Section</b></button>
@@ -85,14 +86,14 @@
         <button type="button" data-proxy-click="installBtn"><span>⇩</span><b>Install App</b></button>
         <button type="button" data-proxy-click="accessBtn"><span>Aa</span><b>Accessibility</b></button>
         <button type="button" data-proxy-click="controlBtn"><span>▦</span><b>Presenter</b></button>
-        <button type="button" data-proxy-click="soundBtn"><span>♫</span><b>Music Player</b></button>
+        
       </div>
     </nav>
 
     <div class="top-actions">
       <button id="museumSearchBtn" class="search-trigger" type="button" title="Search museum"><span>⌕</span><b>Search</b><kbd>/</kbd></button>
-      <button id="narrationBtn" class="compact-top-action" type="button" title="Narrate current section"><span aria-hidden="true">🔊</span><b>Narrate</b></button>
-      <button id="passportBtn" class="compact-top-action" type="button" title="Visitor passport"><span aria-hidden="true">◉</span><b>Passport</b></button>
+      <button id="narrationBtn" type="button" title="Narrate current section">Narrate</button>
+      <button id="passportBtn" type="button" title="Visitor passport">Passport</button>
 
       <div class="language-picker">
         <button id="languageBtn" type="button" title="Language" aria-haspopup="true" aria-expanded="false">
@@ -114,6 +115,7 @@
       <button id="menuBtn" type="button" title="Menu" aria-expanded="false">☰</button>
     </div>
   </header>
+  <div id="mobileMenuBackdrop" class="mobile-menu-backdrop" hidden></div>
 
   <aside id="roomsDrawer" class="rooms-drawer" aria-hidden="true">
     <button id="roomsClose" class="drawer-close" type="button" aria-label="Close rooms">×</button>
@@ -1224,11 +1226,6 @@
 
 
 
-  
-  <button id="mobileMusicLauncher" class="mobile-music-launcher" type="button" aria-label="Open music player" title="Music Player">
-    <span>♫</span><b>Music</b>
-  </button>
-
   <div id="musicMiniPlayer" class="music-mini-player" hidden>
     <button id="miniMusicOpen" class="mini-music-info" type="button">
       <span id="miniMusicIcon">🌍</span>
@@ -1416,6 +1413,11 @@
 
   <div id="utilityBackdrop" class="utility-backdrop" hidden></div>
   <div id="kioskBadge" class="kiosk-badge" hidden><i></i> KIOSK MODE <button id="exitKioskBtn" type="button">Exit</button></div>
+
+
+  <button id="mobileMusicBtn" class="mobile-music-launcher" type="button" aria-label="Open music player">
+    <span>♫</span><b>Music</b>
+  </button>
 
   <nav id="mobileNav" class="mobile-nav" aria-label="Mobile navigation">
     <a href="#home" data-mobile-section="home"><span>⌂</span><small>Home</small></a>

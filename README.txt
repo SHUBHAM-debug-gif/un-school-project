@@ -302,17 +302,17 @@ VERSION 10.4 — MULTILINGUAL EDITION
 All translations work offline. No external translation service is required.
 
 
-VERSION 10.5 — COMPLETE MOBILE-FRIENDLY FIX
-- Fixed the hero title overflowing beyond narrow phone screens.
-- Reduced and responsively scaled the large UNITED NATIONS heading.
-- Contained all hero rows, cards, badges and statistics within the viewport.
-- Improved globe scaling and reduced excessive hero height on phones.
-- Converted Narrate and Passport into compact icon controls on small screens.
-- Fixed the mobile menu so it ends above the fixed bottom navigation.
-- Added proper scrolling and extra bottom space inside the mobile menu.
-- Added a permanent floating Music button above the mobile navigation.
-- The floating Music button opens the full player even before playback begins.
-- Improved the music bottom sheet height and scrolling on small phones.
-- The mobile menu now closes before opening Music, Passport or utility panels.
-- Added additional safeguards against horizontal page overflow.
-- Updated the PWA cache to Version 10.5.
+VERSION 10.5 — MOBILE LAYOUT FIX
+- Fixed the navigation link that remained over the hero section.
+- The mobile menu is now a proper scrollable drawer with an opaque background.
+- Added a dark backdrop and reliable close behavior.
+- The menu closes after selecting a page, tool, pressing Escape or tapping outside.
+- Simplified the mobile header to brand, language and menu controls.
+- Moved Narration and Passport into the mobile menu to create more space.
+- Reduced and contained the large United Nations hero heading.
+- Prevented horizontal page overflow on narrow devices.
+- Fixed hero buttons, badges, information strips and cards overflowing the screen.
+- Added a permanent mobile Music button above the bottom navigation.
+- Music Player is now the first and largest tool inside the mobile menu.
+- The music panel opens as a full-width scrollable bottom sheet.
+- Updated the offline cache to Version 10.5.

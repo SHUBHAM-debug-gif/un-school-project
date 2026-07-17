@@ -1230,165 +1230,47 @@ html[lang="hi"] .section-heading h2,html[lang="hi"] .hero h1{line-height:1.06;le
 
 
 /* ==========================================================
-   V10.5 COMPLETE MOBILE-FRIENDLY FIX
+   V10.5 FINAL MOBILE LAYOUT FIX
    ========================================================== */
-*,*::before,*::after{box-sizing:border-box}
-html,body{width:100%;max-width:100%;overflow-x:hidden}
-main,.hero,.hero-copy,.hero-visual,.section,.section>*{min-width:0;max-width:100%}
-img,svg,video,canvas{max-width:100%;height:auto}
-.topbar{max-width:100vw;overflow:visible}
-.compact-top-action{display:inline-flex;align-items:center;justify-content:center;gap:6px}
-.compact-top-action span{font-size:14px}
-.compact-top-action b{font-size:10px}
+html,body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden!important;
+}
+body>*{
+  max-width:100%;
+}
+img,svg,canvas,video{
+  max-width:100%;
+}
+.mobile-menu-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:1325;
+  background:rgba(0,5,15,.76);
+  backdrop-filter:blur(7px);
+}
+.mobile-menu-backdrop[hidden]{display:none}
 .mobile-music-launcher{display:none}
 
 @media(max-width:900px){
-  body{
-    width:100%;
-    max-width:100vw;
-    overflow-x:hidden;
-  }
-
-  /* The mobile menu now ends above the fixed bottom navigation. */
-  #mainNav{
-    top:calc(var(--header-height) + env(safe-area-inset-top) + 4px);
-    bottom:calc(var(--mobile-nav-height) + 18px + env(safe-area-inset-bottom));
-    left:10px;
-    right:10px;
-    width:auto;
-    max-width:none;
-    max-height:none;
-    overscroll-behavior:contain;
-    -webkit-overflow-scrolling:touch;
-    padding:12px 12px 28px;
-    scroll-padding-bottom:28px;
-  }
-  #mainNav>a{
-    flex:0 0 auto;
-    width:100%;
-    min-height:50px;
-  }
-  .mobile-menu-tools{
-    flex:0 0 auto;
-    width:100%;
-    padding-bottom:12px;
-  }
-
-  /* Prevent every hero child from increasing the document width. */
-  .hero{
-    width:100%;
-    max-width:100vw;
-    overflow:hidden;
-    padding-left:16px;
-    padding-right:16px;
-  }
-  .hero-copy,.hero-visual{
-    width:100%;
-    max-width:100%;
-    overflow:hidden;
-  }
-  .hero h1{
-    width:100%;
-    max-width:100%;
-    margin-left:auto;
-    margin-right:auto;
-    overflow-wrap:anywhere;
-  }
-  .hero h1 small,.hero h1 span{
-    width:100%;
-    max-width:100%;
-  }
-  .hero h1 span{
-    white-space:normal;
-    overflow-wrap:anywhere;
-  }
-  .hero-lead{
-    width:100%;
-    max-width:100%;
-    padding-inline:4px;
-    overflow-wrap:anywhere;
-  }
-  .hero-actions,.hero-badges,.hero-institution-bar,.hero-room-strip,.hero-stats{
-    width:100%;
-    max-width:100%;
-    min-width:0;
-  }
-  .hero-institution-bar{
-    justify-content:center;
-    overflow:hidden;
-  }
-  .hero-room-strip a,.hero-stats article{
-    min-width:0;
-    overflow:hidden;
-  }
-  .hero-room-strip b,.hero-room-strip small,.hero-stats span{
-    overflow-wrap:anywhere;
-  }
-  .hero-visual{
-    min-height:300px;
-  }
-  .earth-wrap,.earth{
-    max-width:100%;
-  }
-
-  /* Permanent phone music control above the bottom nav. */
-  .mobile-music-launcher{
-    position:fixed;
-    display:flex;
-    align-items:center;
-    gap:7px;
-    left:14px;
-    bottom:calc(var(--mobile-nav-height) + 20px + env(safe-area-inset-bottom));
-    z-index:1205;
-    min-width:92px;
-    min-height:43px;
-    padding:8px 13px;
-    border:1px solid rgba(92,225,255,.34);
-    border-radius:999px;
-    background:rgba(3,20,42,.94);
-    color:white;
-    box-shadow:0 12px 34px rgba(0,0,0,.55),0 0 18px rgba(92,225,255,.12);
-    backdrop-filter:blur(17px);
-  }
-  .mobile-music-launcher span{
-    width:27px;height:27px;display:grid;place-items:center;
-    border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--blue));
-    color:#001426;font-size:15px;font-weight:900;
-  }
-  .mobile-music-launcher b{font-size:9px}
-  body.music-playing .mobile-music-launcher span{animation:pulse 1.25s infinite}
-  body.music-has-started .mobile-music-launcher{display:none}
-
-  /* The music bottom sheet always fits between header and bottom nav. */
-  .music-panel{
-    left:8px;
-    right:8px;
-    bottom:calc(var(--mobile-nav-height) + 10px + env(safe-area-inset-bottom));
-    width:auto;
-    max-width:none;
-    max-height:calc(100dvh - var(--header-height) - var(--mobile-nav-height) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
-    padding-bottom:calc(18px + env(safe-area-inset-bottom));
-    overscroll-behavior:contain;
-    -webkit-overflow-scrolling:touch;
-  }
-  .music-track-list{max-height:220px;overflow:auto}
-}
-
-@media(max-width:600px){
   .topbar{
-    padding-inline:10px;
-    gap:6px;
+    z-index:1400;
+    width:100%;
+    max-width:100%;
+    padding-left:14px!important;
+    padding-right:14px!important;
+    gap:7px;
   }
   .brand{
     flex:1 1 auto;
     min-width:0;
-    gap:7px;
+    overflow:hidden;
   }
   .brand-seal{
-    flex:0 0 39px;
+    flex:0 0 auto;
   }
   .brand>span:last-child{
-    min-width:0;
     overflow:hidden;
   }
   .brand b{
@@ -1398,114 +1280,269 @@ img,svg,video,canvas{max-width:100%;height:auto}
     text-overflow:ellipsis;
     white-space:nowrap;
   }
+
+  /* Only language and menu remain in the mobile header. */
   .top-actions{
     flex:0 0 auto;
-    gap:4px;
+    margin-left:auto;
+    gap:6px;
   }
-  .top-actions button{
-    min-width:43px;
-    width:43px;
-    padding:6px;
+  .top-actions #museumSearchBtn,
+  .top-actions #narrationBtn,
+  .top-actions #passportBtn,
+  .top-actions #roomsBtn,
+  .top-actions #soundBtn,
+  .top-actions #installBtn,
+  .top-actions #accessBtn,
+  .top-actions #controlBtn,
+  .top-actions #presentBtn{
+    display:none!important;
   }
-  .compact-top-action b{display:none}
-  .compact-top-action span{font-size:16px}
+  .top-actions .language-picker,
+  .top-actions #menuBtn{
+    display:block!important;
+  }
   .language-picker #languageBtn{
-    width:auto;
-    min-width:65px;
-    padding-inline:7px;
+    min-width:72px!important;
+    min-height:44px;
+    padding:7px 9px!important;
   }
-  #menuBtn{width:43px}
+  #menuBtn{
+    width:46px;
+    min-width:46px!important;
+    height:44px;
+    padding:0!important;
+  }
 
-  /* Fit the complete title inside a 320–430 px phone viewport. */
+  /* Menu is completely absent while closed. */
+  .topbar #mainNav{
+    display:none!important;
+    position:fixed!important;
+    z-index:1350;
+    top:calc(var(--header-height) + env(safe-area-inset-top) + 7px)!important;
+    left:10px!important;
+    right:10px!important;
+    width:auto!important;
+    max-width:none!important;
+    max-height:calc(100dvh - var(--header-height) - env(safe-area-inset-top) - 24px)!important;
+    margin:0!important;
+    padding:12px 12px calc(18px + env(safe-area-inset-bottom))!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    gap:8px!important;
+    visibility:visible!important;
+    opacity:1!important;
+    transform:none!important;
+    border:1px solid rgba(116,216,255,.25);
+    border-radius:20px;
+    background:#04152f!important;
+    box-shadow:0 28px 90px rgba(0,0,0,.86);
+  }
+  .topbar #mainNav.open{
+    display:flex!important;
+  }
+  .topbar #mainNav>a{
+    flex:0 0 auto;
+    width:100%;
+    min-height:50px;
+    padding:13px 16px;
+    border:1px solid rgba(116,216,255,.07);
+    border-radius:12px;
+    background:#ffffff06;
+    color:#e9f7ff;
+    font-size:15px;
+    font-weight:650;
+  }
+  .topbar #mainNav>a.active{
+    border-color:rgba(92,225,255,.32);
+    background:#009edb20;
+    color:var(--cyan);
+  }
+  .mobile-menu-tools{
+    flex:0 0 auto;
+    width:100%;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:9px!important;
+    margin-top:4px;
+    padding-top:13px!important;
+  }
+  .mobile-menu-tools button{
+    width:100%;
+    min-width:0;
+    min-height:62px!important;
+    padding:12px!important;
+    overflow:hidden;
+  }
+  .mobile-menu-tools button b{
+    display:block;
+    overflow-wrap:anywhere;
+    font-size:11px!important;
+  }
+  .mobile-menu-tools .mobile-menu-music{
+    grid-column:1/3;
+    min-height:68px!important;
+    border-color:rgba(92,225,255,.40)!important;
+    background:linear-gradient(135deg,rgba(0,158,219,.22),rgba(92,225,255,.08))!important;
+  }
+  body.mobile-menu-open{
+    overflow:hidden!important;
+  }
+
+  /* Hero starts below the header and can never exceed the viewport width. */
   .hero{
-    padding-top:calc(var(--header-height) + env(safe-area-inset-top) + 18px);
+    width:100%;
+    max-width:100%;
+    padding-top:calc(var(--header-height) + env(safe-area-inset-top) + 24px)!important;
+    padding-left:16px!important;
+    padding-right:16px!important;
+    overflow:hidden;
+  }
+  .hero-copy,.hero-visual{
+    width:100%;
+    max-width:100%;
+    min-width:0;
   }
   .hero h1{
-    font-size:clamp(31px,9.6vw,41px)!important;
-    line-height:.94;
-    letter-spacing:-.035em;
-  }
-  .hero h1 small{
-    font-size:.48em;
-    letter-spacing:.025em;
-  }
-  .hero h1 span{
-    font-size:1em;
-    -webkit-text-stroke:.8px var(--cyan);
-  }
-  .hero-lead{
-    font-size:13.5px;
-    line-height:1.62;
-  }
-  .hero-visual{
-    min-height:285px;
-  }
-  .earth{
-    width:min(255px,72vw)!important;
-  }
-  .floating-label{
-    max-width:90px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-  }
-  .hero-badges{
     width:100%;
-    margin-inline:0;
-    padding-inline:0;
+    max-width:100%;
+    margin-left:auto;
+    margin-right:auto;
+    font-size:clamp(35px,10.8vw,49px)!important;
+    line-height:.94!important;
+    letter-spacing:-.035em!important;
+    overflow-wrap:anywhere;
+    word-break:normal;
   }
-  .hero-institution-bar{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:7px;
-    text-align:center;
-  }
-  .hero-institution-bar span{
-    min-width:0;
+  .hero h1 span,.hero h1 small{
+    width:100%;
     max-width:100%;
     overflow-wrap:anywhere;
   }
-
-  #mainNav{
-    border-radius:16px;
+  .hero h1 span{
+    -webkit-text-stroke:.8px var(--cyan);
   }
-  #mainNav a{
-    padding:13px 14px;
-    font-size:15px;
-  }
-  .mobile-menu-tools{
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-  }
-  .mobile-menu-tools button{
-    min-width:0;
-    min-height:62px;
-    padding:10px;
-  }
-  .mobile-menu-tools b{
+  .hero .eyebrow{
+    max-width:100%;
     overflow-wrap:anywhere;
-    line-height:1.25;
+    line-height:1.45;
+  }
+  .hero-lead{
+    width:100%;
+    max-width:100%;
+    padding-inline:3px;
+    font-size:15px!important;
+    overflow-wrap:anywhere;
+  }
+  .hero-actions,
+  .hero-badges,
+  .hero-institution-bar,
+  .hero-room-strip,
+  .hero-stats{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+  }
+  .hero-badges{
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+  }
+  .hero-institution-bar{
+    overflow-x:auto;
+    flex-wrap:nowrap;
+    justify-content:flex-start;
+    padding-bottom:5px;
+  }
+  .hero-institution-bar span{
+    flex:0 0 auto;
+    white-space:nowrap;
+  }
+
+  /* Permanent music access above the bottom navigation. */
+  .mobile-music-launcher{
+    position:fixed;
+    display:flex;
+    z-index:1240;
+    left:14px;
+    bottom:calc(var(--mobile-nav-height) + 20px + env(safe-area-inset-bottom));
+    min-width:126px;
+    min-height:52px;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    padding:8px 16px 8px 9px;
+    border:1px solid rgba(92,225,255,.42);
+    border-radius:999px;
+    background:rgba(3,22,45,.96);
+    color:#fff;
+    box-shadow:0 15px 45px rgba(0,0,0,.65),0 0 24px rgba(0,158,219,.13);
+    backdrop-filter:blur(18px);
+  }
+  .mobile-music-launcher span{
+    width:36px;
+    height:36px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--cyan),var(--blue));
+    color:#001426;
+    font-size:18px;
+  }
+  .mobile-music-launcher b{font-size:12px}
+  body.music-has-started .mobile-music-launcher{
+    display:none;
+  }
+
+  /* Music panel is always above the bottom nav and fully scrollable. */
+  .music-panel{
+    z-index:1650!important;
+    left:0!important;
+    right:0!important;
+    top:auto!important;
+    bottom:calc(var(--mobile-nav-height) + 8px + env(safe-area-inset-bottom))!important;
+    width:100%!important;
+    max-width:100%!important;
+    max-height:calc(100dvh - var(--mobile-nav-height) - env(safe-area-inset-bottom) - 16px)!important;
+    padding:18px 16px calc(24px + env(safe-area-inset-bottom))!important;
+    overflow-y:auto!important;
+    overscroll-behavior:contain;
+    border-radius:24px 24px 0 0!important;
+  }
+  .music-backdrop{z-index:1600!important}
+  .music-track-list{
+    max-height:none;
   }
 }
 
-@media(max-width:390px){
-  .brand-mobile-text{font-size:8.5px}
-  .top-actions{gap:3px}
-  .top-actions button,#menuBtn{width:40px;min-width:40px}
-  .language-picker #languageBtn{min-width:58px;width:58px}
-  .language-picker #languageBtn i{display:none}
+@media(max-width:430px){
+  .topbar{
+    padding-left:10px!important;
+    padding-right:10px!important;
+  }
+  .brand-seal{
+    width:42px!important;
+    height:42px!important;
+  }
+  .brand b{font-size:10px!important}
+  .language-picker #languageBtn{
+    min-width:67px!important;
+  }
+  .language-picker #languageBtn span{font-size:16px}
+  .hero{
+    padding-left:13px!important;
+    padding-right:13px!important;
+  }
   .hero h1{
-    font-size:clamp(29px,9.3vw,36px)!important;
+    font-size:clamp(32px,10.2vw,43px)!important;
+    letter-spacing:-.028em!important;
   }
-  .hero-visual{min-height:265px}
-  .earth{width:min(235px,70vw)!important}
-  .hero-room-strip{grid-template-columns:1fr 1fr}
-  .mobile-menu-tools{grid-template-columns:1fr}
-  .mobile-music-launcher{
-    left:10px;
-    min-width:44px;
-    width:44px;
-    padding:7px;
+  .hero-lead{font-size:14px!important}
+  .mobile-menu-tools{
+    grid-template-columns:1fr!important;
   }
-  .mobile-music-launcher b{display:none}
+  .mobile-menu-tools .mobile-menu-music{
+    grid-column:auto;
+  }
 }
